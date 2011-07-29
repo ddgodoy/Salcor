@@ -1,0 +1,113 @@
+{include file="encabezado.tpl.html"}
+<script language="javascript" type="text/javascript" src="{$stRUTAS.jscript}yui/yahoo/yahoo-min.js"></script>
+<script language="javascript" type="text/javascript" src="{$stRUTAS.jscript}yui/connection/connection-min.js"></script>
+<script language="javascript" type="text/javascript" src="{$stRUTAS.jscript}valida_numeros.js"></script>
+<script language="javascript" type="text/javascript" src="{$stRUTAS.jscript}obtener_rangos.js"></script>
+
+<div class="div_contenido_estaticos">
+<form method="post" action="{$stACTION}" enctype="multipart/form-data">
+  <table cellpadding="2" cellspacing="0" class="tmFormTABLE">
+  	<tr>
+      <td class="tmFormHeaderFont" colspan="2" align="center">{$stBTN_ACTION} valor</td>
+    </tr>
+    <tr><td class="tmErrorDataTD" colspan="2">{$stERROR|default:'&nbsp;'}</td></tr>
+    {if $stUSUARIOS_DB}
+     <tr>
+      <td class="tmFieldCaptionTD">Usuario *</td>
+      <td class="tmDataTD"><select name="usuario_db" class="tmSelect" style="width:250px;">{$stUSUARIOS_DB}</select></td>
+    </tr>
+    {/if}
+    <tr>
+      <td class="tmFieldCaptionTD">Sigla *</td>
+      <td class="tmDataTD"><input name="sigla" id="sigla" value="{$stSIGLA}" style="width:250px;" class="tmInput"></td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Moneda *</td>
+      <td class="tmDataTD"><select name="moneda" class="tmSelect" style="width:250px;">{$stMONEDA}</select></td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Tabla *</td>
+      <td class="tmDataTD">
+      	<select name="tabla" class="tmSelect" style="width:250px;" onchange="cambiarValoresTabla(this.value);">{$stTABLA}</select>
+      </td>
+    </tr>
+     <tr>
+     <td class="tmFieldCaptionTD">Especie *</td>
+      <td class="tmDataTD"><select name="especie" class="tmSelect" style="width:350px;">{$stESPECIE}</select></td>
+    </tr>
+     <tr>
+      <td class="tmFieldCaptionTD">Sector *</td>
+      <td class="tmDataTD"><select name="sector" class="tmSelect" style="width:350px;">{$stSECTOR}</select></td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Pa&iacute;s *</td>
+     <td class="tmDataTD"><select name="pais" class="tmSelect" style="width:350px;">{$stPAIS}</select></td>
+    </tr>
+   <tr>
+      <td class="tmFieldCaptionTD">Bolsa *</td>
+      <td class="tmDataTD"><select name="bolsa" class="tmSelect" style="width:350px;">{$stBOLSA}</select></td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Comentario</td>
+      <td class="tmDataTD"><textarea name="comentario" id="comentario" class="tmInput" style="width:350px;height:100px;">{$stCOMENTARIO}</textarea></td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Recomendado</td>
+      <td class="tmDataTD"><input type="checkbox" name="recomendado" {$stRECOMENDADO} /></td>
+    </tr>
+    <tr><td height="10"></td></tr>
+    <tr>
+    	<td align="center"><div id="indicador_ajax_rangos" style="visibility:hidden;"><img src="{$stRUTAS.images}indicador.gif" border="0"></div></td>
+    	<td>
+    		Rangos de compra
+    		<span style="margin-left:10px;cursor:pointer;" onclick="obtenerRangos();" title="Obtener rangos de compra">[obtener]</span>
+    	</td>
+    </tr>
+   <tr>
+      <td class="tmFieldCaptionTD">Bueno</td>
+      <td class="tmDataTD">
+      <input name="rango_cb" id="rango_cb" value="{$stRANGO_CB}" style="width:104px;text-align:right;" class="tmInput" onkeypress="return onlyDecimal(this, event);">
+      <span style="padding-left:10px;" id="riesgo_tb">{$stRIESGO_TB}</span>&nbsp;%
+      </td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Muy bueno</td>
+      <td class="tmDataTD">
+      <input name="rango_cmb" id="rango_cmb" value="{$stRANGO_CMB}" style="width:104px;text-align:right;" class="tmInput" onkeypress="return onlyDecimal(this, event);">
+      <span style="padding-left:10px;" id="riesgo_tmb">{$stRIESGO_TMB}</span>&nbsp;%
+      </td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Excelente</td>
+      <td class="tmDataTD">
+      <input name="rango_ce" id="rango_ce" value="{$stRANGO_CE}" style="width:104px;text-align:right;" class="tmInput" onkeypress="return onlyDecimal(this, event);">
+      <span style="padding-left:10px;" id="riesgo_te">{$stRIESGO_TE}</span>&nbsp;%
+      </td>
+    </tr>
+    <tr><td height="10"></td></tr>
+    <tr>
+      <td colspan="2">
+      	<table cellpadding="0" cellspacing="0" border="0" width="170">
+      		<tr>
+      			<td align="right"><input type="radio" name="estado" value="A" {if $stESTADO == 'A'}checked{/if}></td>
+      			<td align="right" width="35">Activo</td>
+      			<td align="right"><input type="radio" name="estado" value="I" {if $stESTADO == 'I'}checked{/if}></td>
+      			<td align="right" width="45">Inactivo</td>
+      		</tr>
+      	</table>
+      </td>
+    </tr>
+     <tr>
+      <td colspan="2" align="right">
+        <input name="btn_accion" type="submit" value="Aceptar" class="tmButton">
+        <input name="btn_volver" type="button" value="Cancelar" class="tmButton" onclick="location.href='{$stRUTA_VOLVER}';">
+        <input type="hidden" name="id" value="{$stID}">
+        <input type="hidden" name="hidden_usuario" id="hidden_usuario" value="{$stHIDDEN_USUARIO}">
+        <input type="hidden" name="ruta_accion_rangos" id="ruta_accion_rangos" value="{$stRUTAS.val}">
+        <input type="hidden" name="ruta_volver" id="ruta_volver" value="{$stRUTA_VOLVER}">
+      </td>
+    </tr>
+  </table>
+</form>
+</div>
+{include file="pie.tpl.html"}

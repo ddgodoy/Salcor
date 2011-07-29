@@ -1,0 +1,44 @@
+{include file="encabezado.tpl.html"}
+	<br /><br /><br />
+
+	<form method="POST" action="{$stACTION}" id="frmLogin" name="frmLogin">
+		<table cellpadding="2" cellspacing="0" align="center" width="245" class="tmDataTD">
+			<tr>
+				<td colspan="2" valign="middle" align="center">Ingrese su Login y Contraseña</td>
+				<td><img src="{$stRUTAS.images}login.gif" border="0"/></td>
+			</tr>
+		</table>
+		<table cellpadding="2" cellspacing="0" align="center" width="240">
+			<tr>
+				<td class="tmErrorDataTD" colspan="2">{$stERROR|default:'&nbsp;'}</td>
+			</tr>
+			<tr>
+				<td class="tmFieldCaptionTD" align="right">Login</td>
+				<td class="tmDataTD"><input type="text" name="login" maxlength="40" value="{$stLOGIN}" size="27" class="tmInput"></td>
+			</tr>
+			<tr>
+				<td class="tmFieldCaptionTD" align="right">Contraseña</td>
+				<td class="tmDataTD"><input type="password" name="password" maxlength="40" size="27" class="tmInput"></td>
+			</tr>
+			<tr>
+				<td colspan="2" class="tmDataTD" align="right" style="padding-bottom:6px;">
+					<a href="recordar.php" class="Link_olvido">Olvidó su contraseña?</a>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="right" class="tmDataTD"><input name="btnLogin" type="submit" value="Ingresar" class="tmButton" /></td>
+			</tr>
+		</table>
+	</form>
+	
+	<br /><br />
+	<center>
+	<div style="width:400px;font-family:arial;background-color:#F0F0F0;padding:5px;">
+		<span style="color: #676767"><strong style="color:#676767;font-size:12px;">Bienvenidos a SALCOR BUSINESS</strong></span><br />
+  		<blockquote style="margin:0px;color:#676767;font-size:12px;"><strong>Estimado Usuario:</strong></blockquote>
+  		<p style="color:#676767;margin:5px;font-size:12px;">Le damos la bienvenida a nuestra p&aacute;gina y lo invitamos a registrarse en ella para contar con una herramienta que le permitira administrar su Cartera de Valores y Titulos de una forma sencilla y &aacute;gil permitiendole tomar decisiones en forma adecuada a los criterios establecidos que usted defina, de manera personal, estableciendo prametros y objetivos propios a alcanzar.</p>
+	</div>
+	</center>
+<script type="text/javascript">document.frmLogin.login.focus();</script>
+<!--principios{if $stPRINCIPIO_DICHO}{$stPRINCIPIO_DICHO}{$stPRINCIPIO_EXPLICACION}{/if}-->
+{include file="pie.tpl.html"}

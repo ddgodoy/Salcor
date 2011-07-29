@@ -1,0 +1,33 @@
+{include file="encabezado.tpl.html"}
+<script type="text/javascript" language="javascript" src="{$stRUTAS.jscript}valida_numeros.js"></script>
+
+<form method="post" action="{$stACTION}" enctype="multipart/form-data">
+  <table cellpadding="2" cellspacing="0" class="tmFormTABLE">
+  	<tr>
+      <td class="tmFormHeaderFont" colspan="2" align="center">{$stBTN_ACTION} divisor</td>
+    </tr>
+    <tr><td class="tmErrorDataTD" colspan="2">{$stERROR|default:'&nbsp;'}</td></tr>
+    {if $stUSUARIOS_DB}
+     <tr>
+      <td class="tmFieldCaptionTD">Usuario *</td>
+      <td class="tmDataTD"><select name="usuario_db" class="tmSelect" style="width:200px;">{$stUSUARIOS_DB}</select></td>
+    </tr>
+    {/if}
+     <tr>
+      <td class="tmFieldCaptionTD">Moneda *</td>
+      <td class="tmDataTD"><select name="moneda" class="tmSelect" style="width:200px;">{$stMONEDA}</select></td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Valor *</td>
+      <td class="tmDataTD"><input name="valor" value="{$stVALOR}" style="width:200px;" class="tmInput" onkeypress="return onlyDecimal(this, event);"></td>
+    </tr>
+     <tr>
+      <td colspan="2" align="right">
+        <input name="btn_accion" type="submit" value="Aceptar" class="tmButton">
+        <input name="btn_volver" type="button" value="Cancelar" class="tmButton" onclick="location.href='div.listar.php';">
+        <input type="hidden" name="id" value="{$stID}">
+      </td>
+    </tr>
+  </table>
+</form>
+{include file="pie.tpl.html"}

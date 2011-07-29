@@ -1,0 +1,59 @@
+{include file="encabezado.tpl.html"}
+<form method="post" action="{$stACTION}" name="frmFormRegistrar" enctype="multipart/form-data">
+  <table cellpadding="2" cellspacing="0" class="tmFormTABLE">
+  	<tr>
+      <td class="tmFormHeaderFont" colspan="2" align="center">{$stBTN_ACTION} bolsa</td>
+    </tr>
+    <tr><td class="tmErrorDataTD" colspan="2">{$stERROR|default:'&nbsp;'}</td></tr>
+    <tr>
+      <td class="tmFieldCaptionTD">C&oacute;digo *</td>
+      <td class="tmDataTD"><input name="codigo" value="{$stCODIGO}" style="width:100px;" class="tmInput"></td>
+    </tr>
+     <tr>
+      <td class="tmFieldCaptionTD">Nombre *</td>
+      <td class="tmDataTD"><input name="nombre" value="{$stNOMBRE}" style="width:420px;" class="tmInput"></td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Desde</td>
+      <td class="tmDataTD">
+      	<table cellpadding="0" cellspacing="0" border="0">
+      	<tr>
+      		<td><input name="desdeh" value="{$stDESDEH}" style="width:30px;text-align:right;" class="tmInput"></td>
+      		<td width="2"></td>
+      		<td>:</td>
+      		<td width="2"></td>
+      		<td><input name="desdem" value="{$stDESDEM}" style="width:30px;text-align:right;" class="tmInput"></td>
+      		<td width="3"></td>
+      		<td>Hs.</td>
+      		<td width="20"></td>
+      		<td class="tmFieldCaptionTD">&nbsp;Hasta&nbsp;&nbsp;</td>
+      		<td><input name="hastah" value="{$stHASTAH}" style="width:30px;text-align:right;" class="tmInput"></td>
+      		<td width="2"></td>
+      		<td>:</td>
+      		<td width="2"></td>
+      		<td><input name="hastam" value="{$stHASTAM}" style="width:30px;text-align:right;" class="tmInput"></td>
+      		<td width="3"></td>
+      		<td>Hs.</td>
+      	</tr>
+      	</table>
+      </td>
+    </tr>
+     <tr>
+      <td class="tmFieldCaptionTD">Lapso</td>
+      <td class="tmDataTD">
+      	<input name="lapso" value="{$stLAPSO}" style="width:30px;text-align:right;" class="tmInput">
+      	<span style="font-size:11px;">&nbsp;&nbsp;lapso de tiempo para actualizar &uacute;ltimas cotizaciones (en segundos)</span>
+      </td>
+    </tr>
+    <tr><td height="10"></td></tr>
+     <tr>
+      <td colspan="2" align="right">
+        <input name="btn_accion" type="submit" value="Aceptar" class="tmButton">
+        <input name="btn_volver" type="button" value="Cancelar" class="tmButton" onclick="location.href='bol.listar.php';">
+        <input type="hidden" name="id" value="{$stID}">
+      </td>
+    </tr>
+  </table>
+</form>
+<script type="text/javascript">document.frmFormRegistrar.codigo.focus();</script>
+{include file="pie.tpl.html"}

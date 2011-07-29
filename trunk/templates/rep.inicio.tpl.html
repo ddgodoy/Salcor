@@ -1,0 +1,132 @@
+{include file="encabezado.tpl.html"}
+<script language="javascript" type="text/javascript" src="{$stRUTAS.jscript}yui_252/yahoo-dom-event.js"></script>
+<script language="javascript" type="text/javascript" src="{$stRUTAS.jscript}yui_252/dragdrop-min.js"></script>
+<script language="javascript" type="text/javascript" src="{$stRUTAS.jscript}yui_252/animation-min.js"></script>
+<script language="javascript" type="text/javascript">
+{literal}
+	function viewListaFiltros(activo){
+		for (var i=1; i<=4; i++){
+			document.getElementById('ul'+i).style.display = 'none';
+		}
+		document.getElementById(activo).style.display = '';
+	}
+/**/
+	function checkOrden(){
+		var frmAct = '';
+		var filtro = '';
+		var auxiId = '';
+		var aIdSel = new Array();
+		var hfiltr = document.getElementById('filtros');
+		var origen = document.getElementById('sel_origen').value;
+		var ul_sel = document.getElementById(origen);
+		var aItems = ul_sel.getElementsByTagName("select");
+
+		filtro = origen + '_';
+		for (var i=0; i<aItems.length; i++) {
+			auxiId = aItems[i].id;
+			aIdSel = auxiId.split('_');
+
+			filtro += aIdSel[1] + '|' + aItems[i].selectedIndex + '_';
+    }
+    filtro = filtro.substring(0,(filtro.length-1));
+		hfiltr.value = filtro;
+		/**/
+		switch (origen){
+			case 'ul1':	frmAct = 'rep.cartera.php'; break;
+			case 'ul2':	frmAct = 'rep.compra.php'; break;
+			case 'ul3':	frmAct = 'rep.rentabilidad.php'; break;
+			case 'ul4':	frmAct = 'rep.operaciones.php';
+		}
+		document.getElementById('frmInicioRep').action = frmAct;
+		/**/
+		return true;
+	}
+	function viewSectores(estado){
+		document.getElementById('divSectoresVer').style.display = estado;
+	}
+{/literal}
+</script>
+{include file="rep.include_js.tpl.html"}
+
+<table border="0" cellspacing="0" cellpadding="0" align="center">
+	<tr><td height="5"></td></tr>
+	<tr>
+		<td>
+			<img src="{$stRUTAS.images}titulo_reporte1.gif" border="0"/>
+		</td>
+		<td>
+		{if $stUSUARIOS_DB}
+		<form id="frmSearchUsu" action="rep.inicio.php" method="POST" enctype="multipart/form-data">
+			<table cellpadding="0" cellspacing="0">
+			<tr>
+				<td><select name="usuario_db" class="tmSelect" style="width:250px;">{$stUSUARIOS_DB}</select></td>
+				<td><input name="btnBuscar" type="submit" value="Actualizar" class="tmButton" style="height:20px;"></td>
+			</tr>
+		</table>
+		</form>
+		{/if}
+		</td>
+	</tr>
+	<tr><td height="15"></td></tr>
+	<tr>
+  	<td>
+		<form id="frmInicioRep" action="rep.inicio.php" method="POST" enctype="multipart/form-data">
+  	<table border="0">
+  		<tr>
+  			<td valign="top">SECTORES :</td>
+  			<td style="border-bottom:1px solid #CCCCCC;padding-bottom:10px;">
+  				<table cellpadding="0" cellspacing="0" border="0" width="100%">
+  					<tr>
+  						<td align="right"><input type="radio" name="rad_sec" checked onclick="viewSectores('none');"/></td>
+  						<td>&nbsp;Todos los sectores</td>
+  						<td align="right"><input type="radio" name="rad_sec" onclick="viewSectores('');"/></td>
+  						<td>&nbsp;Algunos</td>
+  					</tr>
+  					<tr><td height="5"></td></tr>
+  					<tr>
+  						<td colspan="4">
+  							<div class="divSelectMultiple" id="divSectoresVer" style="display:none;">{$stSECTORES}</div>
+  						</td>
+  					</tr>
+  				</table>
+  			</td>
+  		</tr>
+  		<tr><td height="8"></td></tr>
+  		<tr>
+  			<td>ORIGEN :</td>
+  			<td>
+  				<select class="tmSelect" id="sel_origen" style="width:324px;" onchange="viewListaFiltros(this.value);">
+  					<option value="ul1">Cartera de valores</option>
+  					<option value="ul2">An&aacute;lisis de Compra</option>
+  					<option value="ul3">An&aacute;lisis de Rentabilidad</option>
+  					<option value="ul4">An&aacute;lisis de Operaciones</option>
+  				</select>
+  			</td>
+  		</tr>
+  		<tr><td height="8"></td></tr>
+  		<tr>
+  			<td valign="top">FILTROS :</td>
+  			<td>
+					{include file="rep.include_ul.tpl.html"}
+  			</td>
+  		</tr>
+  		<tr><td height="8"></td></tr>
+  		<tr>
+  			<td colspan="2" align="right">
+  				<table>
+  					<tr>
+  						<td>
+  							<input type="submit" class="tmButton" value="Generar reporte" onclick="return checkOrden();"/>
+  							<input type="hidden" id="filtros" name="filtros" value=""/>
+  						</td>
+  					</tr>
+  				</table>
+  			</td>
+  		</tr>
+  	</table>
+		</form>
+		</td>
+		<td valign="top" style="padding-left:5px;"></td>
+	</tr>
+</table>
+{include file="pie.tpl.html"}

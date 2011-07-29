@@ -1,0 +1,135 @@
+{include file="encabezado.tpl.html"}
+<script type="text/javascript" language="javascript" src="{$stRUTAS.jscript}valida_numeros.js"></script>
+
+<form method="post" action="{$stACTION}" enctype="multipart/form-data">
+  <table cellpadding="2" cellspacing="0" class="tmFormTABLE" width="535">
+  	<tr>
+      <td class="tmFormHeaderFont" colspan="2" align="center">{$stBTN_ACTION} rentabilidad esperada</td>
+    </tr>
+    <tr><td class="tmErrorDataTD" colspan="2">{$stERROR|default:'&nbsp;'}</td></tr>
+    {if $stUSUARIOS_DB}
+     <tr>
+      <td class="tmFieldCaptionTD" width="15%">Usuario *</td>
+      <td class="tmDataTD"><select name="usuario_db" class="tmSelect" style="width:250px;">{$stUSUARIOS_DB}</select></td>
+    </tr>
+    <tr><td height="10"></td></tr>
+    {/if}
+    {if $stVER_MENSAJE_UPDATE}<tr><td colspan="2" style="color:#2C7500;" align="right">-- Valores actualizados --</td></tr>{/if}
+    <tr>
+    	<td colspan="2">
+    		<table cellpadding="2" cellspacing="0" border="0">
+    			<tr>
+    				<td class="tmFieldCaptionTD">Entrada *</td>
+    				<td class="tmDataTD"><input name="entrada" value="{$stENTRADA}" style="width:100px;text-align:right;" class="tmInput" onkeypress="return onlyDecimal(this, event);"></td>
+    				<td width="7" class="tmDataTD">&nbsp;</td>
+    				<td class="tmFieldCaptionTD">Salida *</td>
+    				<td class="tmDataTD"><input name="salida" value="{$stSALIDA}" style="width:100px;text-align:right;" class="tmInput" onkeypress="return onlyDecimal(this, event);"></td>
+    			</tr>
+    		</table>
+    	</td>
+    </tr>
+    <tr><td height="10"></td></tr>
+    <tr><td colspan="2" align="center">Rentabilidad</td></tr>
+    <tr>
+    	<td colspan="2">
+    		<table cellpadding="2" cellspacing="0" border="0">
+    			<tr>
+    				<td bgcolor="#EFEDED" width="70">Buena *</td>
+    				<td class="tmDataTD" width="90">
+    					<input name="buena" value="{$stBUENA}" style="width:50px;text-align:right;" class="tmInput" onkeypress="return onlyInteger(this, event);">&nbsp;%
+    				</td>
+    				<td width="5">&nbsp;</td>
+    				<td bgcolor="#EFEDED" width="70">Muy buena *</td>
+    				<td class="tmDataTD" width="90">
+    					<input name="mbuena" value="{$stMBUENA}" style="width:50px;text-align:right;" class="tmInput" onkeypress="return onlyInteger(this, event);">&nbsp;%
+    				</td>
+    				<td width="5">&nbsp;</td>
+    				<td bgcolor="#EFEDED" width="70">Excelente *</td>
+    				<td class="tmDataTD" width="90">
+    					<input name="excelente" value="{$stEXCELENTE}" style="width:50px;text-align:right;" class="tmInput" onkeypress="return onlyInteger(this, event);">&nbsp;%
+    				</td>
+    			</tr>
+    			{if $stBTN_ACTION == 'Modificar'}
+    			<tr>
+    				<td colspan="2" style="border:1px solid #EFEDED;">
+    					<table cellpadding="0" cellspacing="0" border="0" align="center">
+    						<tr><td height="5"></td></tr>
+    						<tr>
+    							<td>T.B.A.</td><td width="5"></td><td style="font-weight:bold;color:#4F4F4F;">{$stTBA_B|string_format:"%.6f"}</td>
+    						</tr>
+    						<tr><td height="3"></td></tr>
+    						<tr>
+    							<td>T.B.M.</td><td width="5"></td><td style="font-weight:bold;color:#4F4F4F;">{$stTBM_B|string_format:"%.6f"}</td>
+    						</tr>
+    						<tr><td height="3"></td></tr>
+    						<tr>
+    							<td>T.B.D.</td><td width="5"></td><td style="font-weight:bold;color:#4F4F4F;">{$stTBD_B|string_format:"%.6f"}</td>
+    						</tr>
+    					</table>
+    				</td>
+    				<td width="5">&nbsp;</td>
+    				<td colspan="2" style="border:1px solid #EFEDED;">
+    					<table cellpadding="0" cellspacing="0" border="0" align="center">
+    						<tr><td height="5"></td></tr>
+    						<tr>
+    							<td>T.B.A.</td><td width="5"></td><td style="font-weight:bold;color:#4F4F4F;">{$stTBA_MB|string_format:"%.6f"}</td>
+    						</tr>
+    						<tr><td height="3"></td></tr>
+    						<tr>
+    							<td>T.B.M.</td><td width="5"></td><td style="font-weight:bold;color:#4F4F4F;">{$stTBM_MB|string_format:"%.6f"}</td>
+    						</tr>
+    						<tr><td height="3"></td></tr>
+    						<tr>
+    							<td>T.B.D.</td><td width="5"></td><td style="font-weight:bold;color:#4F4F4F;">{$stTBD_MB|string_format:"%.6f"}</td>
+    						</tr>
+    					</table>
+    				</td>
+    				<td width="5">&nbsp;</td>
+    				<td colspan="2" style="border:1px solid #EFEDED;">
+    					<table cellpadding="0" cellspacing="0" border="0" align="center">
+    						<tr><td height="5"></td></tr>
+    						<tr>
+    							<td>T.B.A.</td><td width="5"></td><td style="font-weight:bold;color:#4F4F4F;">{$stTBA_E|string_format:"%.6f"}</td>
+    						</tr>
+    						<tr><td height="3"></td></tr>
+    						<tr>
+    							<td>T.B.M.</td><td width="5"></td><td style="font-weight:bold;color:#4F4F4F;">{$stTBM_E|string_format:"%.6f"}</td>
+    						</tr>
+    						<tr><td height="3"></td></tr>
+    						<tr>
+    							<td>T.B.D.</td><td width="5"></td><td style="font-weight:bold;color:#4F4F4F;">{$stTBD_E|string_format:"%.6f"}</td>
+    						</tr>
+    					</table>
+    				</td>
+    			</tr>
+    			{/if}
+    		</table>
+    	</td>
+    </tr>
+     <tr>
+      <td colspan="2">
+      	<table cellpadding="0" cellspacing="0" border="0" width="100%">
+      		<tr><td height="10"></td></tr>
+      		<tr>
+      		{if $stBTN_ACTION == 'Modificar'}
+      			<td>
+      				<table cellpadding="0" cellspacing="0" border="0">
+      					<tr>
+      						<td style="font-size:10px;color:#4F4F4F;">T.B.A.[tasa bruta anual]</td><td width="6"></td>
+      						<td style="font-size:10px;color:#4F4F4F;">T.B.M.[tasa bruta mensual]</td><td width="6"></td>
+      						<td style="font-size:10px;color:#4F4F4F;">T.B.D.[tasa bruta diaria]</td>
+      					</tr>
+      				</table>
+      			</td>
+      		{/if}
+      			<td align="right" valign="bottom">
+      				<input name="btn_accion" type="submit" value="Aceptar" class="tmButton">
+        			<input name="btn_volver" type="button" value="Cancelar" class="tmButton" onclick="location.href='tas.listar.php';">
+      			</td>
+      		</tr>
+      	</table>
+      </td>
+    </tr>
+  </table>
+</form>
+{include file="pie.tpl.html"}

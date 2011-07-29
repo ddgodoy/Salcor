@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<title>{$stTITLE|default:'SALCOR STOCK MANAGER'}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link href="{$stRUTAS.estilo}admin.css" type="text/css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" media="all" href="{$stRUTAS.calendr}skin/theme.css"/>
+	<script type="text/javascript" language="javascript" src="{$stRUTAS.jscript}functions.js"></script>
+</head>
+<body onLoad="StartClock();" onUnload="KillClock();">
+<center>
+<!-- inicio panel compra / venta -->
+<div class="div_panel" id="id_div_panel">
+	<table cellpadding="0" cellspacing="0" width="100%" border="0">
+		<tr>
+			<td colspan="2" align="right" style="padding-top:2px;padding-right:2px;">
+				<img src="{$stRUTAS.images}cerrar_panel.gif" border="0" style="cursor:pointer;" title="Cerrar" onClick="desactivarPanel();">
+			</td>
+		</tr>
+		<tr><td height="3"></td></tr>
+		<tr>
+			<td colspan="2" align="center" style="padding-left:2px;padding-right:2px;color:#303030;" id="leyenda_panel"></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center" style="padding-left:2px;padding-right:2px;color:#4F4F4F;font-weight:bold;" id="sigla_panel"></td>
+		</tr>
+		<tr><td height="10"></td></tr>
+		<tr>
+			<td align="right" width="65">Fecha&nbsp;</td>
+			<td><input type="text" size="10" class="tmInput" id="fecha_panel" style="text-align:center;"></td>
+		</tr>
+		<tr><td height="5"></td></tr>
+		<tr>
+			<td align="right">Precio&nbsp;</td>
+			<td><input type="text" size="10" class="tmInput" id="precio_panel" style="text-align:right;" onKeyPress="return onlyDecimal(this, event);"><br></td>
+		</tr>
+		<tr><td height="3"></td></tr>
+		<tr>
+			<td align="right">Bolsa&nbsp;</td>
+			<td>
+				<select class="tmSelect" name="bolsas" id="opcion_bolsa" style="width:82px;border:1px solid #B0B0B0;">
+					{foreach from=$stBOLSA key=id item=opcion}
+						<option value={$opcion.Id}>{$opcion.Nombre}</option>	
+					{/foreach}
+				</select>
+			</td>
+		</tr>
+		<tr><td height="5"></td></tr>
+		<tr>
+			<td align="center">
+			<div id="indicador_ajax_panel" style="visibility:hidden;">
+				<table cellpadding="0" cellspacing="0" border="0">
+					<tr><td align="center"><img src="{$stRUTAS.images}indicador.gif" border="0"></td></tr>
+					<tr><td style="font-size:9px;color:#5C5C5C;" align="center">procesando...</td></tr>
+				</table>
+			</div>
+			</td>
+			<td style="padding-left:12px;">
+				<input type="button" class="tmButton" id="boton_panel" value="" onClick="return checkAccionPanel();">
+				<input type="hidden" name="id_valor_panel" id="id_valor_panel" value="0">
+				<input type="hidden" name="fcompra_panel" id="fcompra_panel" value="">
+				<input type="hidden" name="pcompra_panel" id="pcompra_panel" value="0">
+				<input type="hidden" name="compra_valor_id_panel" id="compra_valor_id_panel" value="">
+			</td>
+		</tr>
+	</table>
+</div>
+<!-- final panel compra / venta -->
+<div class="div_oscurecer" id="id_div_overlay" onClick="desactivarOverlay();"></div>
+<div class="div_borde_pagina">
+<table cellSpacing="0" cellPadding="0" width="984" border="0" bgcolor="#333333" style="height:80px;">
+	<tr>
+		<td width="250" height="127"><img src="{$stRUTAS.images}logo.jpg" border="0" usemap="#mapa_overlay"></td>
+		<td width="734" height="127">
+		<table cellpadding="0" cellspacing="0" style="height:100%;" border="0" width="100%">
+			<tr>
+				<td align="right" style="color:#FFFFFF;font-size:11px;" width="640"><strong>Servidor de Actualizaciones:</strong></td>
+				<td align="right" style="color:{if $stEN_LINEA}#40AA00{else}#FC3018{/if};font-size:11px">
+					<strong>{if $stEN_LINEA}En{else}Fuera de{/if} L&iacute;nea&nbsp;</strong>
+				</td>
+			</tr>
+			<tr>
+				<td align="right" valign="top" style="color:#FFFFFF;font-size:11px;"><strong>Estado de la Conexi&oacute;n:</strong></td>
+				<td align="right" valign="top" style="color:{if $stCONTENIDO}#40AA00{else}#FC3018{/if};font-size:11px">
+					<strong>{if !$stCONTENIDO}Desconectado{else}Conectado{/if}&nbsp;</strong>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="right" style="font-size:10px;color:#FFFFFF;">
+					{$stDIA_ACTUAL}&nbsp;[<span id="hora_actual">{$stHORA_ACTUAL}</span>]&nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" style="border-top:1px solid #999999;">
+					 <table cellpadding="0" cellspacing="0" width="100%" border="0">
+					<tr>
+						<td width="80">
+							<img src="{$stRUTAS.images}trian.png" width="16" height="16"><a href="{$stRUTAS.admin}contenido.php" style="color:#CCCCCC;text-decoration:none;"><strong> Inicio</strong></a>						</td>
+						<td style="color:#cccccc;" width="100">
+						  
+						  <img src="{$stRUTAS.images}trian.png" width="16" height="16"> <span>{if $stUSUARIO_LINK_DATOS}
+							<a href="{$stUSUARIO_LINK_DATOS}" style="color:#cccccc;text-decoration:none;">
+								<strong>Mis datos</strong>							</a>
+						{else}
+							<a href="{$stRUTAS.admin}registro.php" style="color:#cccccc;text-decoration:none;">
+								<strong>Registro</strong>							</a>
+						{/if}</span>						</td>
+						<td style="color:#DE4603;" width="90">
+							<img src="{$stRUTAS.images}trian.png" width="16" height="16"> <a href="{$stRUTAS.admin}contacto{if !$stCONTENIDO}_out{/if}.php" style="color:#CCCCCC;text-decoration:none;"><strong>Contacto</strong>							</a>						</td>
+						{if $stCONTENIDO}
+						<td style="color:#DE4603;">
+						</td>
+						<td style="color:#DE4603;" align="right">
+							<a href="{$stRUTAS.admin}logout.php" style="color:#CCCCCC;text-decoration:none;"><strong>Salir</strong></a></td>
+						{/if}
+					</tr>
+					</table>
+				</td>
+			</tr>
+		  </table>
+		</td>
+	</tr>
+</table>
+<table width="984" style="height:470px" cellpadding="2" cellspacing="0" align="center" bgcolor="#FFFFFF">
+	<tr>
+	<td vAlign="top" width="124" class="tmColumnTD" align="center">
+	<table width="125" cellpadding="2" cellspacing="0" bgcolor="#FFFFFF">
+{foreach from=$stCONTENIDO key=id item=sub}
+	<tr>
+{	if $sub.Desc == "-"}
+		<td class="tmDataTD1" height="10"></td>
+{	elseif !$sub.Link}
+		<td class="tmColumnTD" nowrap align="center"><img src="{$stRUTAS.images}item2.gif" width="4" height="8">  {$sub.Desc}</td>
+{	else}
+		<td class="tmDataTD1" align="left"  ><img src="{$stRUTAS.images}trian2.png"> <a class='tmDataLink' href='{$sub.Link}'>{$sub.Desc}</a></td>
+{	/if}
+	</tr>
+{/foreach}
+	</table>
+	</td>
+	<td style="padding-right:5px;padding-left:5px;" valign="top" width="860">
