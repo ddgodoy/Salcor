@@ -1,0 +1,29 @@
+{include file="encabezado.tpl.html"}
+<form method="post" action="{$stACTION}" name="frmSecRegistrar" enctype="multipart/form-data">
+  <table cellpadding="2" cellspacing="0" class="tmFormTABLE">
+  	<tr>
+      <td class="tmFormHeaderFont" colspan="2" align="center">{$stBTN_ACTION} sector</td>
+    </tr>
+    <tr><td class="tmErrorDataTD" colspan="2">{$stERROR|default:'&nbsp;'}</td></tr>
+    <tr>
+      <td class="tmFieldCaptionTD">C&oacute;digo *</td>
+      <td class="tmDataTD">
+      	<input name="codigo" value="{$stCODIGO}" style="width:50px;" maxlength="4" class="tmInput">
+      	&nbsp;M&aacute;ximo de 4 caracteres
+      </td>
+    </tr>
+     <tr>
+      <td class="tmFieldCaptionTD">Nombre *</td>
+      <td class="tmDataTD"><input name="nombre" value="{$stNOMBRE}" style="width:420px;" class="tmInput"></td>
+    </tr>
+     <tr>
+      <td colspan="2" align="right">
+        <input name="btn_accion" type="submit" value="Aceptar" class="tmButton">
+        <input name="btn_volver" type="button" value="Cancelar" class="tmButton" onclick="location.href='sec.listar.php';">
+        <input type="hidden" name="id" value="{$stID}">
+      </td>
+    </tr>
+  </table>
+</form>
+<script type="text/javascript">document.frmSecRegistrar.codigo.focus();</script>
+{include file="pie.tpl.html"}

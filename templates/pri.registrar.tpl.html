@@ -1,0 +1,26 @@
+{include file="encabezado.tpl.html"}
+<form method="post" action="{$stACTION}" name="frmPriRegistrar" enctype="multipart/form-data">
+  <table cellpadding="2" cellspacing="0" class="tmFormTABLE">
+  	<tr>
+      <td class="tmFormHeaderFont" colspan="2" align="center">{$stBTN_ACTION} principio del sistema</td>
+    </tr>
+    <tr><td class="tmErrorDataTD" colspan="2">{$stERROR|default:'&nbsp;'}</td></tr>
+     <tr>
+      <td class="tmFieldCaptionTD">Dicho *</td>
+      <td class="tmDataTD"><input name="dicho" value="{$stDICHO}" style="width:420px;" class="tmInput"></td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Explicaci&oacute;n *</td>
+      <td class="tmDataTD"><textarea name="explicacion" rows="12" class="tmInput" style="width:420px;">{$stEXPLICACION}</textarea></td>
+    </tr>
+     <tr>
+      <td colspan="2" align="right">
+        <input name="btn_accion" type="submit" value="Aceptar" class="tmButton">
+        <input name="btn_volver" type="button" value="Cancelar" class="tmButton" onclick="location.href='pri.listar.php';">
+        <input type="hidden" name="id" value="{$stID}">
+      </td>
+    </tr>
+  </table>
+</form>
+<script type="text/javascript">document.frmPriRegistrar.dicho.focus();</script>
+{include file="pie.tpl.html"}

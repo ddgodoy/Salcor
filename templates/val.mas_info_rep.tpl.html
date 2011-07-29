@@ -1,0 +1,76 @@
+{include file="encabezado.tpl.html"}
+{literal}
+<style type="text/css">
+	.td_periodo_on{
+		cursor: pointer;
+		text-decoration: underline;
+		color: #757575;
+	}
+	.td_periodo_off{
+		text-decoration: none;
+		color: #31414E;
+	}
+</style>
+<script language="javascript" type="text/javascript">
+	function submitMasInfo(periodo){
+		document.getElementById('periodo').value = periodo;
+		document.forms[0].submit();
+	}
+</script>
+{/literal}
+<form action="{$stACTION}" method="POST" enctype="multipart/form-data">
+<table cellpadding="2" cellspacing="0" class="tmFormTABLE" width="600" style="margin-top:5px;">
+	<tr><td height="5"></td></tr>
+	<tr>
+    <td class="tmFormHeaderFont" colspan="2" align="center">Detalle del valor {$stNOMBRE} [{$stSIGLA}]</td>
+  </tr>
+  <tr><td height="10"></td></tr>
+  <tr>
+  	<td>
+  		<table cellpadding="0" cellspacing="0" border="0">
+  		<tr>
+  			<td width="55">Per&iacute;odo:</td>
+  			<td width="33" align="center" {if $stPERIODO=='1d'}class="td_periodo_off"{else}class="td_periodo_on" onclick="submitMasInfo('1d');"{/if}>
+  				1 d&iacute;a
+  			</td><td width="10"></td>
+  			<td width="38" align="center" {if $stPERIODO=='5d'}class="td_periodo_off"{else}class="td_periodo_on" onclick="submitMasInfo('5d');"{/if}>
+  				5 d&iacute;as
+  			</td><td width="10"></td>
+  			<td width="40" align="center" {if $stPERIODO=='1m'}class="td_periodo_off"{else}class="td_periodo_on" onclick="submitMasInfo('1m');"{/if}>
+  				1 mes
+  			</td><td width="10"></td>
+  			<td width="53" align="center" {if $stPERIODO=='3m'}class="td_periodo_off"{else}class="td_periodo_on" onclick="submitMasInfo('3m');"{/if}>
+  				3 meses
+  			</td><td width="10"></td>
+  			<td width="53" align="center" {if $stPERIODO=='6m'}class="td_periodo_off"{else}class="td_periodo_on" onclick="submitMasInfo('6m');"{/if}>
+  				6 meses
+  			</td><td width="10"></td>
+  			<td width="35" align="center" {if $stPERIODO=='1y'}class="td_periodo_off"{else}class="td_periodo_on" onclick="submitMasInfo('1y');"{/if}>
+  				1 a&ntilde;o
+  			</td>
+  		</tr>
+  		</table>
+  	</td>
+  </tr>
+  <tr><td height="5"></td></tr>
+  <tr>
+    <td style="height:280px;background-color:#EFEDED;" align="center" valign="middle">
+    	<img src="http://cchart.yahoo.com/z?s={$stSIGLA}&a=v&p=s&t={$stPERIODO}&l=off&z=m&q=l&i=ar" border="0" alt="Imagen no disponible">
+    </td>
+  </tr>
+  <tr><td height="10"></td></tr>
+  <tr>
+  	<td align="center" width="100%">
+  		{$stTABLA|default:'Datos no disponibles'}
+  	</td>
+  </tr>
+  <tr><td height="10"></td></tr>
+   <tr>
+    <td colspan="2" align="right">
+      <input type="hidden" name="Id" id="Id" value="{$stID}">
+      <input type="hidden" name="periodo" id="periodo" value="{$stPERIODO}">
+    </td>
+  </tr>
+</table>
+</form>
+{include file="pie.tpl.html"}

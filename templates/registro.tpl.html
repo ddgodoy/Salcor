@@ -1,0 +1,75 @@
+{include file="encabezado.tpl.html"}
+<script type="text/javascript" src="{$stRUTAS.calendr}calendar.js"></script>
+<script type="text/javascript" src="{$stRUTAS.calendr}lang/calendar-es.js"></script>
+<script type="text/javascript" src="{$stRUTAS.calendr}calendar-setup.js"></script>
+
+<form method="post" action="{$stACTION}">
+  <table cellpadding="2" cellspacing="0" class="tmFormTABLE">
+  	<tr>
+  		<td align="center" class="tmFormHeaderFont" colspan="2">Formulario de Registro</td>
+  	</tr>
+    <tr><td class="tmErrorDataTD" colspan="2">{$stERROR|default:'&nbsp;'}</td></tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Fecha de nac. *</td>
+      <td class="tmDataTD">
+      <table cellpadding="0" cellspacing="0" border="0">
+      <tr>
+      <td><input name="fecnac" id="fecnac" value="{$stFECNAC}" size="10" class="tmInput" style="text-align:center;"></td>
+      <td style="padding-left:5px;"><img id="vercalendario" src="{$stRUTAS.images}calendario.gif" border="0" title="Seleccionar fecha"></td>
+      </tr>
+      </table>
+      <script type="text/javascript">
+	    Calendar.setup({ldelim}
+	        inputField : "fecnac",
+	        ifFormat   : "%d/%m/%Y",
+	        button     : "vercalendario",
+	        align      : "Bl",
+	        singleClick: true
+	    {rdelim});
+	  </script>
+      </td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Nombre *</td>
+      <td class="tmDataTD"><input name="nombre" value="{$stNOMBRE}" size="60" class="tmInput"></td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Apellido *</td>
+      <td class="tmDataTD"><input name="apellido" value="{$stAPELLIDO}" size="60" class="tmInput"></td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Email m&oacute;vil*</td>
+      <td class="tmDataTD"><input name="personal" value="{$stPERSONAL}" size="60" class="tmInput"></td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Email laboral</td>
+      <td class="tmDataTD"><input name="laboral" value="{$stLABORAL}" size="60" class="tmInput"></td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Tel&eacute;fonos</td>
+      <td class="tmDataTD"><input name="celular" value="{$stCELULAR}" size="60" class="tmInput"></td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Login *</td>
+      <td class="tmDataTD"><input name="login" value="{$stLOGIN}" class="tmInput"></td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Contraseña *</td>
+      <td class="tmDataTD"><input type="password" name="password" class="tmInput"></td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Confirmación *</td>
+      <td class="tmDataTD"><input type="password" name="confirma" class="tmInput"></td>
+    </tr>
+    <tr>
+      <td colspan="2" align="right">
+        <input name="btn_accion" type="submit" value="Aceptar" class="tmButton">
+        <input name="btn_volver" type="button" value="Cancelar" class="tmButton" onclick="location.href='{$stRUTAS.admin}index.php';">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" style="font-size:11px;"><em>La contrase&ntilde;a debe tener al menos 5 caracteres</em></td>
+    </tr>
+  </table>
+</form>
+{include file="pie.tpl.html"}

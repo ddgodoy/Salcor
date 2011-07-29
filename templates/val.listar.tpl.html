@@ -1,0 +1,328 @@
+{include file="encabezado.tpl.html"}
+<script language="javascript" type="text/javascript" src="{$stRUTAS.jscript}valida_numeros.js"></script>
+<script language="javascript" type="text/javascript">
+{literal}
+	function viewPanelSugerido(valor, sigla, precio){
+		var aPantalla = getPageSize();
+		var oDiv = document.getElementById('id_div_panel_sug');
+		var fDia = document.getElementById('val_fecha_dia').value;
+
+		document.getElementById('sug_idvalor').value = valor;
+		document.getElementById('sug_fecalta').value = fDia;
+		document.getElementById('sug_prealta').value = precio;
+		document.getElementById('sug_fecsug').value  = fDia;
+		document.getElementById('sug_presug').value  = precio;
+		document.getElementById('sigla_panel_sug').innerHTML = sigla;
+
+		oDiv.style.left = (aPantalla[2] / 2) - 100;
+		oDiv.style.top = (aPantalla[3] / 2) - 100;
+		oDiv.style.display = 'block';
+	
+		changeOpac(0,'id_div_panel_sug');
+		opacity('id_div_panel_sug',0,100,300);
+	}
+	//--------------------------------------------------------------
+	function desactivarPanelSug(){
+		var oDiv = document.getElementById('id_div_panel_sug');
+
+		oDiv.style.display = 'none';
+		oDiv.style.top = 0;
+		oDiv.style.left = 0;
+	}
+	//--------------------------------------------------------------
+	function checkAccionPanelSug(){
+		var fecalta= document.getElementById('sug_fecalta');
+		var prealta= document.getElementById('sug_prealta');
+		var fecsug = document.getElementById('sug_fecsug');
+		var presug = document.getElementById('sug_presug');
+		var sugirio= document.getElementById('sug_sugirio');
+		var valor  = document.getElementById('sug_idvalor');
+
+		if (fecalta.value == ''){alert('Complete la fecha de alta'); fecalta.focus(); return false;}
+		if (prealta.value == ''){alert('Complete el precio de alta'); prealta.focus(); return false;}
+		if (fecsug.value == '') {alert('Complete la fecha de sugerencia'); fecsug.focus(); return false;}
+		if (presug.value == '') {alert('Complete el precio de sugerencia'); presug.focus(); return false;}
+		if (sugirio.value == ''){alert('Indique qui\u00E9n sugiri\u00F3'); sugirio.focus(); return false;}
+		if (valor.value == '0') {alert('Error interno'); return false;}
+
+		if (confirm('Confirma esta acci\u00F3n?')){
+			document.getElementById('indicador_ajax_panel_sug').style.visibility = 'visible';
+
+			var postData = '';
+			var oHdlAddSugerencia = {success:okHdlAddSugerencia, failure: badHdlAddSugerencia};
+			
+			postData = 'valor='   + escape(valor.value)  +
+								 '&fecalta='+ escape(fecalta.value)+
+								 '&prealta='+ escape(prealta.value)+
+								 '&fecsug=' + escape(fecsug.value) +
+								 '&presug=' + escape(presug.value) +
+								 '&sugirio='+ escape(sugirio.value);
+			YAHOO.util.Connect.asyncRequest("POST", 'val.add_sugerencia.php', oHdlAddSugerencia, postData);
+		}
+		return false;
+	}
+	var okHdlAddSugerencia = function(o){
+		desactivarPanelSug();
+		document.getElementById('indicador_ajax_panel_sug').style.visibility = 'hidden';
+		alert('La sugerencia fue registrada exitosamente');
+	}
+	var badHdlAddSugerencia = function(o){}
+{/literal}
+</script>
+<!-- inicio panel sugerido -->
+<div class="div_panel_sug" id="id_div_panel_sug">
+	<table cellpadding="0" cellspacing="0" width="100%" border="0">
+		<tr>
+			<td colspan="2" align="right" style="padding-top:2px;padding-right:2px;">
+				<img src="{$stRUTAS.images}cerrar_panel.gif" border="0" style="cursor:pointer;" title="Cerrar" onClick="desactivarPanelSug();">
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center" style="padding-left:2px;padding-right:2px;color:#303030;">DATOS DE SUGERENCIA</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center" style="padding-left:2px;padding-right:2px;color:#4F4F4F;font-weight:bold;" id="sigla_panel_sug"></td>
+		</tr>
+		<tr>
+			<td align="right">Fecha alta&nbsp;</td>
+			<td><input type="text" size="10" class="tmInput" id="sug_fecalta" /></td>
+		</tr>
+		<tr><td height="3"></td></tr>
+		<tr>
+			<td align="right">Precio alta&nbsp;</td>
+			<td><input type="text" size="10" class="tmInput" id="sug_prealta" style="text-align:right;" onKeyPress="return onlyDecimal(this, event);" /></td>
+		</tr>
+		<tr><td height="3"></td></tr>
+		<tr>
+			<td align="right">Fecha sug.&nbsp;</td>
+			<td><input type="text" size="10" class="tmInput" id="sug_fecsug" /></td>
+		</tr>
+		<tr><td height="3"></td></tr>
+		<tr>
+			<td align="right">Precio sug.&nbsp;</td>
+			<td><input type="text" size="10" class="tmInput" id="sug_presug" style="text-align:right;" onKeyPress="return onlyDecimal(this, event);" /></td>
+		</tr>
+		<tr><td height="3"></td></tr>
+		<tr>
+			<td align="right">Sugiri&oacute;&nbsp;</td>
+			<td><input type="text" size="19" class="tmInput" id="sug_sugirio" /></td>
+		</tr>
+		<tr><td height="5"></td></tr>
+		<tr>
+			<td colspan="2">
+			<span id="indicador_ajax_panel_sug" style="visibility:hidden;font-size:9px;">
+				&nbsp;<img src="{$stRUTAS.images}indicador.gif" border="0" style="vertical-align:middle;">&nbsp;procesando...
+			</span>
+			<input type="button" class="tmButton" id="boton_panel_sug" value="Sugerir" onClick="return checkAccionPanelSug();">
+			<input type="hidden" id="sug_idvalor" value="0" />
+			</td>
+		</tr>
+	</table>
+</div>
+<!-- final panel sugerido -->
+<script language="javascript" type="text/javascript" src="{$stRUTAS.jscript}yui_252/yahoo-dom-event.js"></script>
+<script language="javascript" type="text/javascript" src="{$stRUTAS.jscript}yui_252/connection-min.js"></script>
+<script language="javascript" type="text/javascript" src="{$stRUTAS.jscript}yui_252/json-min.js"></script>
+<script language="javascript" type="text/javascript" src="{$stRUTAS.jscript}val_listar.js"></script>
+
+<table border="0" cellspacing="0" cellpadding="0">
+<tr><td height="5"></td></tr>
+<tr>
+	<td>
+<form method="POST" id="frm_val_listar" action="val.listar.php" name="frmBusqueda">
+<table cellpadding="0" cellspacing="0" border="0" width="790">
+	<tr>
+		<td colspan="5" style="border-bottom:1px solid #EFEDED;padding-bottom:5px;">
+			<table cellpadding="0" cellspacing="0" border="0" width="100%">
+				<tr>
+				<td><img src='{$stRUTAS.images}carteradevalores.gif' border='0'/></td>
+				<td align="right">
+					<img id="ajax_animation" src="{$stRUTAS.images}indicador.gif" border="0" style="visibility:hidden;vertical-align:middle;"/>
+					Con marca cambiar a
+				</td>
+				<td align="right" width="110">
+					<select id="letra_tb_cambio" class="tmSelect">
+						<option value="C">Conservadora</option>
+						<option value="A">Agresiva</option>
+						<option value="P">Personal</option>
+					</select>
+				</td>
+				<td><input type="button" class="tmButton" value="Cambiar" onclick="return runCambiarTabla();"/></td>
+				<td align="right"><input type="button" value="Cargar valor" class="tmButton" onclick="location.href='val.registrar.php';" style="height:20px;"></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr><td height="8"></td></tr>
+	<tr>
+	{if $stUSUARIOS_DB}
+		<td>
+			Usuario&nbsp;<select name="usuario_db" class="tmSelect" style="width:250px;vertical-align:middle;">{$stUSUARIOS_DB}</select>
+		</td>
+	{/if}
+		<td>
+			<select name="sselect" id="sselect" class="tmSelect">
+				<option value="valSigla" {if $stSELECT=='valSigla'}selected{/if}>Sigla</option>
+				<option value="espNombre" {if $stSELECT=='espNombre'}selected{/if}>Especie</option>
+				<option value="valNombre" {if $stSELECT=='valNombre'}selected{/if}>Empresa</option>
+				<option value="paiNombre" {if $stSELECT=='paiNombre'}selected{/if}>Pa&iacute;s</option>
+				<option value="secNombre" {if $stSELECT=='secNombre'}selected{/if}>Sector</option>
+				<option value="monNombre" {if $stSELECT=='monNombre'}selected{/if}>Moneda</option>
+			</select>
+			<input type="text" class="tmInput" name="stext" id="stext" value="{$stSTEXT}"/>
+			<input name="btnBuscar" type="submit" value="Buscar" class="tmButton" style="height:20px;">
+		</td>
+	</tr>
+	<tr>
+		<td style="border-bottom:1px solid #EFEDED;">&nbsp;</td>
+		<td style="border-bottom:1px solid #EFEDED;">
+			<table cellpadding="0" cellspacing="10" border="0">
+				<tr>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('A');">A</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('B');">B</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('C');">C</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('D');">D</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('E');">E</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('F');">F</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('G');">G</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('H');">H</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('I');">I</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('J');">J</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('K');">K</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('L');">L</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('M');">M</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('N');">N</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('O');">O</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('P');">P</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('Q');">Q</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('R');">R</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('S');">S</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('T');">T</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('U');">U</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('V');">V</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('W');">W</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('X');">X</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('Y');">Y</td>
+					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('Z');">Z</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+</form>
+  	</td>
+  </tr>
+  <tr><td>
+<form method="post" action="{$stRUTAS.val}val.borrar.php?confirmado=1">
+<table cellpadding="2" cellspacing="0" class="tmFormTABLE">
+	<tr>
+		<td class="bordetab">&nbsp;</td>
+		<td class="bordetab" colspan="4" align="center" style="border-right:1px solid #8396A5;">Datos t&eacute;cnicos</td>
+		<td class="bordetab" colspan="4" align="center" style="border-right:1px solid #8396A5;">Datos generales de la empresa</td>
+		<td class="bordetab" colspan="4" align="center" style="border-right:1px solid #8396A5;">Rangos de compra</td>
+		<td class="bordetab" colspan="3" align="center">Referencias</td>
+		<td class="bordetab">&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="bordetab1" width="20" align="center" style="border-right:1px solid #8396A5;">I</td>
+		<td class="bordetab1" width="66" style="border-right:1px solid #8396A5;">
+			<a href="{$stRUTAS.val}val.listar.php?orden=sigla&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">Sigla</a>
+		</td>
+		<td class="bordetab1" width="31" style="border-right:1px solid #8396A5;" align="center">
+			<a href="{$stRUTAS.val}val.listar.php?orden=especie&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">Esp.</a>
+		</td>
+		<td class="bordetab1" width="16" style="border-right:1px solid #8396A5;" align="center">
+			<a href="{$stRUTAS.val}val.listar.php?orden=moneda&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">M.</a>
+		</td>
+		<td class="bordetab1" width="41" style="border-right:1px solid #8396A5;" align="right">
+			<a href="{$stRUTAS.val}val.listar.php?orden=liquidez&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">Liq.</a>
+		</td>
+		<td class="bordetab1" width="151" style="border-right:1px solid #8396A5;">
+			<a href="{$stRUTAS.val}val.listar.php?orden=empresa&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">Empresa</a>
+		</td>
+		<td class="bordetab1" width="38" style="border-right:1px solid #8396A5;">
+			<a href="{$stRUTAS.val}val.listar.php?orden=sector&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">Sector</a>
+		</td>
+		<td class="bordetab1" width="30" style="border-right:1px solid #8396A5;">
+			<a href="{$stRUTAS.val}val.listar.php?orden=pais&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">Pa&iacute;s</a>
+		</td>
+		<td class="bordetab1" width="20" style="border-right:1px solid #8396A5;" align="center">Prd.</td>
+		<td class="bordetab1" width="15" style="border-right:1px solid #8396A5;" align="center">
+			<img src="{$stRUTAS.images}triangulo_val.gif" border="0" style="position:absolute;margin-top:15px;margin-left:9px;cursor:pointer;" title="Marcar todos" onclick="addCambiarTablaTodos();"/>
+			<a href="{$stRUTAS.val}val.listar.php?orden=tabla&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">T.</a>
+		</td>
+		<td class="bordetab1" width="41" style="border-right:1px solid #8396A5;" align="center">
+			<a href="{$stRUTAS.val}val.listar.php?fly_ord=RangoCB&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">
+				B.
+			</a>
+		</td>
+		<td class="bordetab1" width="41" style="border-right:1px solid #8396A5;" align="center">
+			<a href="{$stRUTAS.val}val.listar.php?fly_ord=RangoCMB&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">
+				M.B.
+			</a>
+		</td>
+		<td class="bordetab1" width="41" style="border-right:1px solid #8396A5;" align="center">
+			<a href="{$stRUTAS.val}val.listar.php?fly_ord=RangoCE&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">
+				Exc.
+			</a>
+		</td>
+		<td class="bordetab1" width="71" style="border-right:1px solid #8396A5;" align="right">
+			<a href="{$stRUTAS.val}val.listar.php?orden=volumen&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">Vol. Prom.</a>
+		</td>
+		<td class="bordetab1" width="44" style="border-right:1px solid #8396A5;">
+			<a href="{$stRUTAS.val}val.listar.php?orden=estado&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">Estado</a>
+		</td>
+		<td class="bordetab1" width="22">&nbsp;</td>
+		<td class="bordetab1" width="22" align="center">
+			<img id="ajax_estrellita" src="{$stRUTAS.images}indicador.gif" style="visibility:hidden;"/>
+		</td>
+	</tr>
+</table>
+<div class="div_contenido_cuerpo">
+<table cellpadding="2" cellspacing="0" class="tmFormTABLE" style="border-top:0px;" id="tb_cambio_tabla">
+{	foreach from=$stVALORES item=valor}
+	<tr onmouseover="this.bgColor='#EFEFE7';" onMouseOut="this.bgColor='#FFFFFF';">
+		<td class='tmDataTD' width="19">
+			<a href='{$stRUTAS.val}val.mas_info.php?Id={$valor.Id}'>
+				<img src='{$stRUTAS.images}informacion.gif' title='M&aacute;s informaci&oacute;n' border='0'/>
+			</a>
+		</td>
+		<td class='tmDataTD' width="65">
+			<a class='tmDataLink' href='{$stRUTAS.val}val.modificar.php?Id={$valor.Id}' style="font-size:11px;">{$valor.Sigla}</a>
+		</td>
+		<td class='tmDataTD' width="30">{$valor.Especie}</td>
+		<td class='tmDataTD' width="15" align="center">{$valor.Moneda}</td>
+		<td class='tmDataTD' width="40" align="right">{$valor.Liquidez|default:'--'}</td>
+		<td class='tmDataTD' width="150" style="font-size:11px;">{$valor.Empresa|default:'--'}</td>
+		<td class='tmDataTD' width="36" style="font-size:11px;">{$valor.Sector}</td>
+		<td class='tmDataTD' width="30">{$valor.Pais}</td>
+		<td class='tmDataTD' width="21" align="center">
+			<a href='http://ar.babelfish.yahoo.com/translate_url?doit=done&tt=url&intl=1&fr=bf-home&trurl=http%3A//finance.yahoo.com/q/pr?s={$valor.Sigla}&lp=en_es&btnTrUrl=Traducir' target="_blank">
+				<img src='{$stRUTAS.images}informacion_.gif' title='Perfil' border='0'/>
+			</a>
+		</td>
+		<td class='tmDataTD' id="td_cambio_tabla_{$valor.Id}" width="15" align="center" style="cursor:pointer;" onclick="addCambiarTabla({$valor.Id});" title="Marcar">
+			{$valor.Tabla}
+		</td>
+		<td class='tmDataTD' width="40" style="font-size:11px;" align="right">{$valor.RangoCB|string_format:"%.2f"}</td>
+		<td class='tmDataTD' width="40" style="font-size:11px;" align="right">{$valor.RangoCMB|string_format:"%.2f"}</td>
+		<td class='tmDataTD' width="40" style="font-size:11px;" align="right">{$valor.RangoCE|string_format:"%.2f"}</td>
+		<td class='tmDataTD' width="70" style="font-size:11px;" align="right">{$valor.Volumen|default:'--'}</td>
+		<td class='tmDataTD' width="42" style="font-size:11px;" align="center">{$valor.Estado}</td>
+		<td class='tmDataTD' width="20" align="center">
+			<a href='{$stRUTAS.val}val.borrar.php?Id[]={$valor.Id}' onclick="return confirmLink(this,'Confirma la eliminación?')">
+				<img src='{$stRUTAS.images}borrar.gif' title='Borrar' border='0'/>
+			</a>
+		</td>
+		<td class='tmDataTD' width="20" align="center">
+			<img id="src_estrellita_{$valor.Id}" src='{$stRUTAS.images}recomendado.gif' title='Sugerir' border='0' onclick="viewPanelSugerido({$valor.Id}, '{$valor.Sigla}', {$valor.Ultima});" style="cursor:pointer;"/>
+		</td>
+	</tr>
+{ /foreach}
+</table>
+<input type="hidden" id="hidden_dirImg" value="{$stRUTAS.images}"/>
+<input type="hidden" id="val_fecha_dia" value="{$stVALFECHADIA}"/>
+</div>
+</form>
+</td></tr></table>
+{include file="pie.tpl.html"}

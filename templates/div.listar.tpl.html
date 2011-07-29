@@ -1,0 +1,54 @@
+{include file="encabezado.tpl.html"}
+<table border="0" cellspacing="0" cellpadding="0">
+<tr><td height="5">&nbsp;</td>
+</tr>
+<tr>
+  	<td>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+		<form method="POST" action="div.listar.php" name="frmBusqueda">
+			<tr>
+			<td><font class="tmFormHeaderFont"><p><img src='{$stRUTAS.images}listadodedivisores.gif' border='0'/></p> </font></td>
+			{if $stUSUARIOS_DB}
+			<td align="right"><select name="usuario_db" class="tmSelect" style="width:200px;">{$stUSUARIOS_DB}</select></td>
+			<td><input name="btnBuscar" type="submit" value="Buscar" class="tmButton" style="height:20px;"></td>
+			{/if}
+			<td align="right"><input type="button" value="Nuevo divisor" class="tmButton" onclick="location.href='div.registrar.php';" style="height:20px;"></td>
+			</tr>
+		</form>
+		</table>
+  	</td>
+  </tr>
+  <tr><td height="10"></td></tr>
+  <tr><td>
+<form method="post" action="{$stRUTAS.div}div.borrar.php?confirmado=1">
+<table cellpadding="2" cellspacing="0" class="tmFormTABLE"> 
+	<tr>
+		<td class="tmColumnTD"><input type='checkbox' name='check_todos' id="check_todos" onclick="checkAll(document.getElementsByName('Id[]'));"/></td>
+		<td class="tmColumnTD" nowrap>&nbsp;</td>
+		<td class="tmColumnTD" nowrap width="200">Moneda</td>
+		<td class="tmColumnTD" nowrap width="250">Valor</td>
+		<td class="tmColumnTD" nowrap>&nbsp;</td>
+	</tr>	
+{	foreach from=$stDIVISORES key=id item=divisor}
+	<tr onmouseover="this.bgColor='#EFEFE7';" onMouseOut="this.bgColor='#FFFFFF';">
+		<td class='tmDataTD'><input type='checkbox' name='Id[]' value='{$id}' /></td>
+		<td class='tmDataTD' valign="middle">
+			<a href='{$stRUTAS.div}div.modificar.php?Id={$id}'>
+				<img src='{$stRUTAS.images}editar.gif' title='Modificar' border='0'/>
+			</a>
+		</td>
+		<td class='tmDataTD'><a class='tmDataLink' href='{$stRUTAS.div}div.modificar.php?Id={$id}'>{$divisor.Moneda}</a></td>
+		<td class='tmDataTD'>{$divisor.Valor}</td>
+		<td class='tmDataTD'>
+			<a href='{$stRUTAS.div}div.borrar.php?Id[]={$id}' onclick="return confirmLink(this,'Confirma la eliminación?')">
+				<img src='{$stRUTAS.images}borrar.gif' title='Borrar' border='0'/>
+			</a>
+		</td>
+	</tr>
+{ /foreach}
+<tr><td height="5"></td></tr>
+<tr><td colspan="7" align="right"><input style="width:140px;" type="submit" name="btn_borrar" value="Borrar seleccionados" class="tmButton" onclick="return confirm('Confirma la eliminación?');"></td></tr>
+</table>
+</form>
+</td></tr></table>
+{include file="pie.tpl.html"}

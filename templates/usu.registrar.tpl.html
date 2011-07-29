@@ -1,0 +1,123 @@
+{include file="encabezado.tpl.html"}
+<script type="text/javascript" src="{$stRUTAS.calendr}calendar.js"></script>
+<script type="text/javascript" src="{$stRUTAS.calendr}lang/calendar-es.js"></script>
+<script type="text/javascript" src="{$stRUTAS.calendr}calendar-setup.js"></script>
+
+<form method="post" action="{$stACTION}" enctype="multipart/form-data">
+<table class="tmFormTABLE">
+<tr>
+<td>
+  <table cellpadding="2" cellspacing="0" class="tmFormTABLE">
+  	<tr>
+  		<td align="center" class="tmFormHeaderFont" colspan="2">{$stBTN_ACTION} usuario</td>
+  	</tr>
+    <tr><td class="tmErrorDataTD" colspan="2">{$stERROR|default:'&nbsp;'}</td></tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Fecha de nac.</td>
+      <td class="tmDataTD">
+      <table cellpadding="0" cellspacing="0" border="0">
+      <tr>
+      <td><input name="fecnac" id="fecnac" value="{$stFECNAC}" size="10" class="tmInput" style="text-align:center;"></td>
+      <td style="padding-left:5px;"><img id="vercalendario" src="{$stRUTAS.images}calendario.gif" border="0" title="Seleccionar fecha"></td>
+      </tr>
+      </table>
+      <script type="text/javascript">
+	    Calendar.setup({ldelim}
+	        inputField : "fecnac",
+	        ifFormat   : "%d/%m/%Y",
+	        button     : "vercalendario",
+	        align      : "Bl",
+	        singleClick: true
+	    {rdelim});
+	  </script>
+      </td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Nombre *</td>
+      <td class="tmDataTD"><input name="nombre" value="{$stNOMBRE}" size="60" class="tmInput"></td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Apellido *</td>
+      <td class="tmDataTD"><input name="apellido" value="{$stAPELLIDO}" size="60" class="tmInput"></td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Email m&oacute;vil*</td>
+      <td class="tmDataTD"><input name="personal" value="{$stPERSONAL}" size="60" class="tmInput"></td>
+     </tr>
+     <tr>
+      <td class="tmFieldCaptionTD">Email laboral</td>
+      <td class="tmDataTD"><input name="laboral" value="{$stLABORAL}" size="60" class="tmInput"></td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Tel&eacute;fonos</td>
+      <td class="tmDataTD"><input name="celular" value="{$stCELULAR}" size="60" class="tmInput"></td>
+    </tr>
+    {if !$stID}
+    <tr>
+      <td class="tmFieldCaptionTD">Login *</td>
+      <td class="tmDataTD"><input name="login" value="{$stLOGIN}" class="tmInput"></td>
+    </tr>
+    {/if}
+    <tr>
+      <td class="tmFieldCaptionTD">Contraseña *</td>
+      <td class="tmDataTD"><input type="password" name="password" class="tmInput"></td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Confirmación *</td>
+      <td class="tmDataTD"><input type="password" name="confirma" class="tmInput"></td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Habilitado</td>
+      <td class="tmDataTD">
+      	<table cellpadding="0" cellspacing="0" border="0">
+      		<tr>
+      			<td><input type="checkbox" name="enabled" {$stENABLED}></td>
+      			<td width="22"></td>
+      			<td class="tmFieldCaptionTD">&nbsp;Recibe alertas&nbsp;</td>
+      			<td><input type="checkbox" name="alerta" {$stALERTA}></td>
+      		</tr>
+      	</table>
+      </td>
+    </tr>
+{if $stAUSERS}
+    <tr><td height="15"></td></tr>
+    <tr>
+    	<td colspan="2" align="center">Clonar cartera de valores desde la lista del usuario:</td>
+    </tr>
+    <tr><td height="3"></td></tr>
+    <tr>
+    	<td colspan="2" align="center">
+    		<select name="clone_user" class="tmSelect" style="width:280px;">
+	<option value="0">-- seleccionar usuario --</option>
+{foreach from=$stAUSERS key=uid item=ausr}
+	<option value="{$uid}">{$ausr}</option>
+{/foreach}
+    		</select>
+    	</td>
+    </tr>
+    <tr><td height="15"></td></tr>
+{/if}
+    <tr>
+      <td colspan="2" align="right">
+        <input name="btn_accion" type="submit" value="Aceptar" class="tmButton">
+        <input name="btn_volver" type="button" value="Cancelar" class="tmButton" onclick="location.href='usu.listar.php';">
+        <input type="hidden" name="id" value="{$stID}" />
+      </td>
+    </tr>
+  </table>
+  </td>
+<td valign="top" style="padding-top:130px;">
+<table>
+<tr>
+<td valign="top">Ej: </td>
+<td>3516596658@personal-net.com.ar<br />
+ 	3516596658@sms.movistar.net.ar<br />
+ 	3516596658@sms.ctimovil.com.ar<br />
+ 	(Sin el 0 ni el 351)</td>
+</tr>
+</table>
+ </td>
+  </tr>
+  </table>
+</form>
+{include file="pie.tpl.html"}

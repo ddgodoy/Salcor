@@ -1,0 +1,95 @@
+{include file="encabezado.tpl.html"}
+<script type="text/javascript" language="javascript" src="{$stRUTAS.jscript}valida_numeros.js"></script>
+
+<form method="post" action="{$stACTION}" enctype="multipart/form-data">
+  <table cellpadding="2" cellspacing="0" class="tmFormTABLE" width="500">
+  	<tr>
+      <td class="tmFormHeaderFont" colspan="2" align="center">{$stBTN_ACTION} rango de compra</td>
+    </tr>
+    <tr><td class="tmErrorDataTD" colspan="2">{$stERROR|default:'&nbsp;'}</td></tr>
+    {if $stUSUARIOS_DB}
+     <tr>
+      <td class="tmFieldCaptionTD" width="13%">Usuario *</td>
+      <td class="tmDataTD"><select name="usuario_db" class="tmSelect" style="width:250px;">{$stUSUARIOS_DB}</select></td>
+    </tr>
+    <tr><td height="10"></td></tr>
+    {/if}
+    {if $stVER_MENSAJE_UPDATE}
+    <tr><td colspan="2" style="color:#2C7500;" align="right">-- Valores actualizados --</td></tr>
+    {/if}
+     <tr>
+      <td colspan="2" width="100%">
+      	<table cellpadding="0" cellspacing="0" width="100%" border="0" bgcolor="#EFEDED">
+      	<tr><td height="5"></td></tr>
+      	<tr>
+      		<td></td>
+      		<td colspan="3">
+      		<table cellpadding="0" cellspacing="0" width="100%" border="0">
+      			<tr>
+      				<td align="center" style="color:#3F3F3F;font-weight:bold;font-size:13px;border-bottom:1px solid #3F3F3F;padding-bottom:5px;">
+      				Tipo de Tabla
+      				</td>
+      			</tr>
+      		</table>
+      		</td>
+      	</tr>
+      	<tr><td height="5"></td></tr>
+      	<tr>
+      		<td>&nbsp;</td>
+      		<td align="center" style="color:#4F4F4F;font-weight:bold;">Conservadora</td>
+      		<td align="center" style="color:#4F4F4F;font-weight:bold;">Agresiva</td>
+      		<td align="center" style="color:#4F4F4F;font-weight:bold;">Personal</td>
+      	</tr>
+      	<tr><td height="5"></td></tr>
+      	<tr>
+      		<td align="right">Rango bueno</td>
+      		<td align="center">
+				<input name="c_bueno" value="{$stC_BUENO}" maxlength="5" type="text" class="tmInput" size="10" style="text-align:right;" onkeypress="return onlyDecimal(this, event);">&nbsp;%
+      		</td>
+      		<td align="center">
+      			<input name="a_bueno" value="{$stA_BUENO}" maxlength="5" type="text" class="tmInput" size="10" style="text-align:right;" onkeypress="return onlyDecimal(this, event);">&nbsp;%
+      		</td>
+      		<td align="center">
+      			<input name="p_bueno" value="{$stP_BUENO}" maxlength="5" type="text" class="tmInput" size="10" style="text-align:right;" onkeypress="return onlyDecimal(this, event);">&nbsp;%
+      		</td>
+      	</tr>
+      	<tr><td height="5"></td></tr>
+      	<tr>
+      		<td align="right">Rango muy bueno</td>
+      		<td align="center">
+      			<input name="c_muybueno" value="{$stC_MUYBUENO}" maxlength="5" type="text" class="tmInput" size="10" style="text-align:right;" onkeypress="return onlyDecimal(this, event);">&nbsp;%
+      		</td>
+      		<td align="center">
+      			<input name="a_muybueno" value="{$stA_MUYBUENO}" maxlength="5" type="text" class="tmInput" size="10" style="text-align:right;" onkeypress="return onlyDecimal(this, event);">&nbsp;%
+      		</td>
+      		<td align="center">
+      			<input name="p_muybueno" value="{$stP_MUYBUENO}" maxlength="5" type="text" class="tmInput" size="10" style="text-align:right;" onkeypress="return onlyDecimal(this, event);">&nbsp;%
+      		</td>
+      	</tr>
+      	<tr><td height="5"></td></tr>
+      	<tr>
+      		<td align="right">Rango excelente</td>
+      		<td align="center">
+      			<input name="c_excelente" value="{$stC_EXCELENTE}" maxlength="5" type="text" class="tmInput" size="10" style="text-align:right;" onkeypress="return onlyDecimal(this, event);">&nbsp;%
+      		</td>
+      		<td align="center">
+      			<input name="a_excelente" value="{$stA_EXCELENTE}" maxlength="5" type="text" class="tmInput" size="10" style="text-align:right;" onkeypress="return onlyDecimal(this, event);">&nbsp;%
+      		</td>
+      		<td align="center">
+      			<input name="p_excelente" value="{$stP_EXCELENTE}" maxlength="5" type="text" class="tmInput" size="10" style="text-align:right;" onkeypress="return onlyDecimal(this, event);">&nbsp;%
+      		</td>
+      	</tr>
+      	<tr><td height="8"></td></tr>
+      	</table>
+      </td>
+    </tr>
+    <tr><td height="15"></td></tr>
+     <tr>
+      <td colspan="2" align="right">
+        <input name="btn_accion" type="submit" value="Aceptar" class="tmButton">
+        <input name="btn_volver" type="button" value="Cancelar" class="tmButton" onclick="location.href='rie.listar.php';">
+      </td>
+    </tr>
+  </table>
+</form>
+{include file="pie.tpl.html"}

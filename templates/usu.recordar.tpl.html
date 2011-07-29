@@ -1,0 +1,100 @@
+{include file="encabezado.tpl.html"}
+<script language="javascript" type="text/javascript">
+{literal}
+<!--
+function formValidation(form){
+	if(notEmpty(form.personal)){
+	if(notEmpty(form.fecha)){
+	if(notEmpty(form.verificar)){	
+		return true;
+	}}}
+	return false;
+}
+function notEmpty(elem){
+	var str = elem.value;
+	if(str.length == 0){alert("Por favor, complete los datos requeridos."); return false;} else {return true;}
+}
+{/literal}
+//-->
+</script>
+<script language="javascript" type="text/javascript" src="{$stRUTAS.calendr}calendar.js"></script>
+<script language="javascript" type="text/javascript" src="{$stRUTAS.calendr}lang/calendar-es.js"></script>
+<script language="javascript" type="text/javascript" src="{$stRUTAS.calendr}calendar-setup.js"></script>
+<br /><br /><br />
+<form method="POST" action="recordar.php" onsubmit="return formValidation(this);" name="frmRecordar">
+	<table cellpadding="2" cellspacing="0" align="center" width="250" class="tmDataTD" border="0">
+		<tr>
+			<td valign="middle" align="center">Confirme su identidad</td>
+			<td><img src="{$stRUTAS.images}recordar.gif" border="0"/></td>
+		</tr>
+	</table>
+	<table cellpadding="2" cellspacing="0" align="center" border="0" width="250">
+		<tr><td class="tmErrorDataTD">{$stERROR|default:'&nbsp;'}</td></tr>
+		<tr>
+			<td class="tmDataTD">
+			<table cellpadding="0" cellspacing="0" border="0">
+			<tr>
+				<td>Email</td><td width="5"></td>
+				<td><input type="text" name="personal" value="{$stPERSONAL}" style="width:207px;" class="tmInput"></td>
+			</tr>
+			</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="tmDataTD">
+				<table cellpadding="0" cellspacing="0" border="0">
+				<tr>
+				<td>Fecha de nacimiento</td><td width="5"></td>
+				<td><input type="text" name="fecha" id="fecha" value="{$stFECHA}" class="tmInput" style="text-align:center;width:95px;"></td>
+				<td style="padding-left:5px;">
+					<img id="vercalendario" src="{$stRUTAS.images}calendario.gif" border="0" title="Seleccionar fecha">
+					<script type="text/javascript">
+					    Calendar.setup({ldelim}
+					        inputField : "fecha",
+					        ifFormat   : "%d/%m/%Y",
+					        button     : "vercalendario",
+					        align      : "Bl",
+					        singleClick: true
+					    {rdelim});
+					  </script>
+				</td>
+				</tr>
+				</table>
+			</td>
+		</tr>
+		<tr><td height="15"></td></tr>
+		<tr><td align="center">Ingrese los caracteres de la imagen</td></tr>
+		<tr>
+			<td class="tmDataTD">
+			<table cellpadding="0" cellspacing="0" border="0">
+				<tr>
+					<td><img id="img_captcha" src="crear_imagen.php" border="0"></td><td width="5"></td>
+					<td>
+					<table cellpadding="0" cellspacing="0" width="100%" border="0">
+					<tr>
+						<td><input type="text" value="{$stVERIFICO}" name="verificar" style="width:85px;text-align:center;" class="tmInput" maxlength="6"></td>
+					</tr>
+					</table>
+					</td>
+				</tr>
+			</table>
+			</td>
+		</tr>
+		<tr><td height="20"></td></tr>
+		<tr>
+			<td class="tmDataTD">
+			<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			<tr>
+				<td><input name="btn_volver" type="button" value="Cancelar" class="tmButton" onclick="location.href='index.php';"></td>
+				<td align="right">
+					<input name="btn_action" type="submit" value="Enviar" class="tmButton" />
+					<input type="hidden" id="ruta_captcha" name="ruta_captcha" value="{$stRUTAS.captcha}">
+				</td>
+			</tr>
+			</table>
+			</td>
+		</tr>
+	</table>
+</form>
+<script language="javascript" type="text/javascript">document.frmRecordar.personal.focus();</script>
+{include file="pie.tpl.html"}

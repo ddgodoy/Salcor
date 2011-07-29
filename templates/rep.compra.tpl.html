@@ -1,0 +1,241 @@
+{include file="encabezado_sinmenu.tpl.html"}
+<script language="javascript" type="text/javascript">
+{literal}
+	function setBusqueda(){
+		var oselect = escape(document.getElementById('h').value);
+		var buscar  = escape(document.getElementById('t').value);
+		var filtros = escape(document.getElementById('filtros').value);
+		var sectores= escape(document.getElementById('sectores').value);
+
+		document.location = 'rep.compra.php?t='+buscar+'&h='+oselect+'&filtros='+filtros+'&sectores='+sectores;
+	}
+	/**/
+	function setResetear(){
+		var filtros = escape(document.getElementById('filtros').value);
+		var sectores = escape(document.getElementById('sectores').value);
+		
+		document.location = 'rep.compra.php?filtros='+filtros+'&sectores='+sectores;
+	}
+	/**/
+	function setTextLetra(letra){
+		document.getElementById('t').value = letra;
+		document.getElementById('h').selectedIndex = 0;
+		setBusqueda();
+	}
+{/literal}
+</script>
+<table border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+	<tr>
+		<td width="230" valign="top">
+			<img src='{$stRUTAS.images}analisisdecompra_rep.gif' border='0'/>
+		</td>
+		<td align="right">
+			<table cellpadding="0" cellspacing="0" border="0">
+				<tr>
+					<td>
+						<select id="h" class="tmSelect">
+							<option value="valSigla" {if $stSELECT=='valSigla'}selected{/if}>Sigla</option>
+							<option value="espNombre" {if $stSELECT=='espNombre'}selected{/if}>Especie</option>
+							<option value="valNombre" {if $stSELECT=='valNombre'}selected{/if}>Empresa</option>
+							<option value="paiNombre" {if $stSELECT=='paiNombre'}selected{/if}>Pa&iacute;s</option>
+							<option value="secNombre" {if $stSELECT=='secNombre'}selected{/if}>Sector</option>
+							<option value="monNombre" {if $stSELECT=='monNombre'}selected{/if}>Moneda</option>
+						</select>
+					</td>
+					<td><input type="text" class="tmInput" id="t" value="{$stSTEXT}"/></td><td width="5"></td>
+					<td>
+						<input name="btnBuscar" type="button" value="Buscar" class="tmButton" style="height:20px;" onclick="setBusqueda();">
+						<input name="btnReset" type="button" value="Resetear" class="tmButton" style="height:20px;" onclick="setResetear();">
+						<input type="hidden" id="filtros" value="{$stFILTROS}"/>
+						<input type="hidden" id="sectores" value="{$stSECTORS}"/>
+					</td>
+					<td width="30"></td>
+					<td>
+						<input style="width:220px;" type="button" class="tmButton" value="Volver a la configuraci&oacute;n de reportes" onclick="document.location='rep.inicio.php';"/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="6" align="right">
+						<table cellpadding="0" cellspacing="10" border="0">
+						<tr>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('A');">A</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('B');">B</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('C');">C</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('D');">D</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('E');">E</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('F');">F</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('G');">G</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('H');">H</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('I');">I</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('J');">J</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('K');">K</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('L');">L</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('M');">M</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('N');">N</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('O');">O</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('P');">P</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('Q');">Q</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('R');">R</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('S');">S</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('T');">T</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('U');">U</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('V');">V</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('W');">W</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('X');">X</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('Y');">Y</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('Z');">Z</td>
+						</tr>
+					</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+  <tr><td height="15"></td></tr>
+  <tr>
+  <td colspan="2">
+	<table cellpadding="2" cellspacing="0" class="tmFormTABLE">
+	<tr>
+		<td class="bordetab" colspan="3" style="border-right:1px solid #8396A5;">&nbsp;</td>
+		<td class="bordetab" colspan="3" align="center" style="border-right:1px solid #8396A5;">Rangos de compra</td>
+		<td class="bordetab" colspan="3" align="center" style="border-right:1px solid #8396A5;">&nbsp;</td>
+		<td class="bordetab" colspan="4" align="center" style="border-right:1px solid #8396A5;">Rentabilidad</td>
+		<td class="bordetab" colspan="3" align="center" style="border-right:1px solid #8396A5;">Datos compra</td>
+		<td class="bordetab" colspan="5" align="center">Datos t&eacute;cnicos</td>
+	</tr>
+	<tr>
+		<td class="bordetab1" align="center">I</td>
+		<td class="bordetab1" align="center">Prd.</td>
+		<td class="bordetab1" style="border-right:1px solid #8396A5;width:70px;">
+			<a href="rep.compra.php?orden=Sigla&sentido={$stSNT}&filtros={$stFILTROS}&sectores={$stSECTORS}&t={$stSTEXT}&h={$stSELECT}" class="tmDataLinke">
+				Sigla
+			</a>
+		</td>
+		<td class="bordetab1" style="border-right:1px solid #8396A5;width:40px;" align="center">
+			<a href="rep.compra.php?orden=RangoCB&sentido={$stSNT}&filtros={$stFILTROS}&sectores={$stSECTORS}&t={$stSTEXT}&h={$stSELECT}" class="tmDataLinke">
+				B.
+			</a>
+		</td>
+		<td class="bordetab1" style="border-right:1px solid #8396A5;width:40px;" align="center">
+			<a href="rep.compra.php?orden=RangoCMB&sentido={$stSNT}&filtros={$stFILTROS}&sectores={$stSECTORS}&t={$stSTEXT}&h={$stSELECT}" class="tmDataLinke">
+				M.B.
+			</a>
+		</td>
+		<td class="bordetab1" style="border-right:1px solid #8396A5;width:40px;" align="center">
+			<a href="rep.compra.php?orden=RangoCE&sentido={$stSNT}&filtros={$stFILTROS}&sectores={$stSECTORS}&t={$stSTEXT}&h={$stSELECT}" class="tmDataLinke">
+				Exc.
+			</a>
+		</td>
+		<td class="bordetab1" style="border-right:1px solid #8396A5;width:40px;" align="right">
+			<a href="rep.compra.php?orden=Liquidez&sentido={$stSNT}&filtros={$stFILTROS}&sectores={$stSECTORS}&t={$stSTEXT}&h={$stSELECT}" class="tmDataLinke">
+				Liq.
+			</a>
+		</td>
+		<td class="bordetab1" style="border-right:1px solid #8396A5;width:40px;" align="right">
+			<a href="rep.compra.php?orden=Ultima&sentido={$stSNT}&filtros={$stFILTROS}&sectores={$stSECTORS}&t={$stSTEXT}&h={$stSELECT}v" class="tmDataLinke">
+				Ult.
+			</a>
+		</td>
+		<td class="bordetab1" style="border-right:1px solid #8396A5;width:40px;" align="right">
+			<a href="rep.compra.php?orden=Division&sentido={$stSNT}&filtros={$stFILTROS}&sectores={$stSECTORS}&t={$stSTEXT}&h={$stSELECT}" class="tmDataLinke">
+				V.P./P.
+			</a>
+		</td>
+		<td class="bordetab1" style="border-right:1px solid #8396A5;width:40px;" align="right">
+			<a href="rep.compra.php?orden=Mala&sentido={$stSNT}&filtros={$stFILTROS}&sectores={$stSECTORS}&t={$stSTEXT}&h={$stSELECT}" class="tmDataLinke">
+				M.
+			</a>
+		</td>
+		<td class="bordetab1" style="border-right:1px solid #8396A5;width:40px;" align="right">
+			<a href="rep.compra.php?orden=Buena&sentido={$stSNT}&filtros={$stFILTROS}&sectores={$stSECTORS}&t={$stSTEXT}&h={$stSELECT}" class="tmDataLinke">
+				B.
+			</a>
+		</td>
+		<td class="bordetab1" style="border-right:1px solid #8396A5;width:40px;" align="right">
+			<a href="rep.compra.php?orden=MBuena&sentido={$stSNT}&filtros={$stFILTROS}&sectores={$stSECTORS}&t={$stSTEXT}&h={$stSELECT}" class="tmDataLinke">
+				M.B.
+			</a>
+		</td>
+		<td class="bordetab1" style="border-right:1px solid #8396A5;width:40px;" align="right">
+			<a href="rep.compra.php?orden=Excelente&sentido={$stSNT}&filtros={$stFILTROS}&sectores={$stSECTORS}&t={$stSTEXT}&h={$stSELECT}" class="tmDataLinke">
+				Exc.
+			</a>
+		</td>
+		<td class="bordetab1" style="border-right:1px solid #8396A5;width:50px;" align="right">
+			<a href="rep.compra.php?orden=FechaCmp&sentido={$stSNT}&filtros={$stFILTROS}&sectores={$stSECTORS}&t={$stSTEXT}&h={$stSELECT}" class="tmDataLinke">
+				Fecha
+			</a>
+		</td>
+		<td class="bordetab1" style="border-right:1px solid #8396A5;width:40px;" align="right">
+			<a href="rep.compra.php?orden=PrecioCmp&sentido={$stSNT}&filtros={$stFILTROS}&sectores={$stSECTORS}&t={$stSTEXT}&h={$stSELECT}" class="tmDataLinke">
+				Precio
+			</a>
+		</td>
+		<td class="bordetab1" style="border-right:1px solid #8396A5;width:30px;" align="right">
+			<a href="rep.compra.php?orden=Edad&sentido={$stSNT}&filtros={$stFILTROS}&sectores={$stSECTORS}&t={$stSTEXT}&h={$stSELECT}" class="tmDataLinke">
+				Edad
+			</a>
+		</td>
+		<td class="bordetab1" style="border-right:1px solid #8396A5;width:50px;" align="right">
+			<a href="rep.compra.php?orden=Divaccion&sentido={$stSNT}&filtros={$stFILTROS}&sectores={$stSECTORS}&t={$stSTEXT}&h={$stSELECT}" class="tmDataLinke">
+				Div/Acc.
+			</a>
+		</td>
+		<td class="bordetab1" style="border-right:1px solid #8396A5;width:50px;" align="right">
+			<a href="rep.compra.php?orden=Ganaccion&sentido={$stSNT}&filtros={$stFILTROS}&sectores={$stSECTORS}&t={$stSTEXT}&h={$stSELECT}" class="tmDataLinke">
+				Gan/Acc.
+			</a>
+		</td>
+		<td class="bordetab1" style="border-right:1px solid #8396A5;width:40px;" align="right">
+			<a href="rep.compra.php?orden=PG&sentido={$stSNT}&filtros={$stFILTROS}&sectores={$stSECTORS}&t={$stSTEXT}&h={$stSELECT}" class="tmDataLinke">
+				P/G
+			</a>
+		</td>
+		<td class="bordetab1" style="border-right:1px solid #8396A5;width:50px;" align="right">
+			<a href="rep.compra.php?orden=Rendim&sentido={$stSNT}&filtros={$stFILTROS}&sectores={$stSECTORS}&t={$stSTEXT}&h={$stSELECT}" class="tmDataLinke">
+				Rendim.
+			</a>
+		</td>
+		<td class="bordetab1" style="width:50px;" align="right">
+			<a href="rep.compra.php?orden=Capitalizacion&sentido={$stSNT}&filtros={$stFILTROS}&sectores={$stSECTORS}&t={$stSTEXT}&h={$stSELECT}" class="tmDataLinke">
+				Capit.
+			</a>
+		</td>
+	</tr>
+{foreach from=$stVALORES key=id item=valor}
+	<tr onmouseover="this.bgColor='#EFEFE7';" onMouseOut="this.bgColor='#FFFFFF';">
+		<td class='tmDataTD' width="19">
+			<a href='{$stRUTAS.val}val.mas_info_rep.php?Id={$valor.Id}' target="_blank">
+				<img src='{$stRUTAS.images}informacion.gif' title='M&aacute;s informaci&oacute;n' border='0'/>
+			</a>
+		</td>
+		<td class='tmDataTD' width="21" align="center">
+			<a href='http://ar.babelfish.yahoo.com/translate_url?doit=done&tt=url&intl=1&fr=bf-home&trurl=http%3A//finance.yahoo.com/q/pr?s={$valor.Sigla}&lp=en_es&btnTrUrl=Traducir' target="_blank">
+				<img src='{$stRUTAS.images}informacion_.gif' title='Perfil' border='0'/>
+			</a>
+		</td>
+		<td class='tmDataTD'>{$valor.Sigla}</td>
+		<td class='tmDataTD' style="font-size:11px;" align="right">{$valor.RangoCB|string_format:"%.2f"}</td>
+		<td class='tmDataTD' style="font-size:11px;" align="right">{$valor.RangoCMB|string_format:"%.2f"}</td>
+		<td class='tmDataTD' style="font-size:11px;" align="right">{$valor.RangoCE|string_format:"%.2f"}</td>
+		<td class='tmDataTD' align="right">{$valor.Liquidez|default:'--'}</td>
+		<td class='tmDataTD' bgcolor="#DDE9F7" align="right">{$valor.Ultima|default:'--'}</td>
+		<td class='tmDataTD' align="right">{$valor.Division|string_format:"%.2f"}</td>
+		<td class='tmDataTD' align="right">{$valor.Mala|string_format:"%.2f"}</td>
+		<td class='tmDataTD' align="right">{$valor.Buena|string_format:"%.2f"}</td>
+		<td class='tmDataTD' align="right">{$valor.MBuena|string_format:"%.2f"}</td>
+		<td class='tmDataTD' align="right">{$valor.Excelente|string_format:"%.2f"}</td>
+		<td class='tmDataTD' align="right">{$valor.FechaCmp}</td>
+		<td class='tmDataTD' align="right">{$valor.PrecioCmp}</td>
+		<td class='tmDataTD' align="right">{$valor.Edad}</td>
+		<td class='tmDataTD' align="right">{$valor.Divaccion|string_format:"%.3f"}</td>
+		<td class='tmDataTD' align="right">{$valor.Ganaccion|string_format:"%.3f"}</td>
+		<td class='tmDataTD' align="right">{$valor.PG|string_format:"%.2f"}</td>
+		<td class='tmDataTD' align="right">{$valor.Rendim|string_format:"%.2f"}</td>
+		<td class='tmDataTD' align="right">{$valor.Capitalizacion|string_format:"%.3f"}</td>
+	</tr>
+{/foreach}
+</table>
+</td></tr></table>
+{include file="pie.tpl.html"}

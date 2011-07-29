@@ -1,0 +1,38 @@
+{include file="encabezado.tpl.html"}
+<form method="post" action="{$stACTION}" enctype="multipart/form-data">
+  <table cellpadding="2" cellspacing="0" class="tmFormTABLE">
+  	<tr>
+  		<td align="center" class="tmFormHeaderFont" colspan="2">Formulario de Contacto</td>
+  	</tr>
+    <tr>
+      <td class="tmErrorDataTD" colspan="2">{$stERROR|default:'&nbsp;'}</td>
+    </tr>
+    {if !$stCONTENIDO}
+    <tr>
+      <td class="tmFieldCaptionTD">Nombre *</td>
+      <td class="tmDataTD"><input name="nombre" value="{$stNOMBRE}" style="width:400px;" class="tmInput"></td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Email *</td>
+      <td class="tmDataTD"><input name="email" value="{$stEMAIL}" style="width:400px;" class="tmInput"></td>
+    </tr>
+    {/if}
+    <tr>
+      <td class="tmFieldCaptionTD">Asunto *</td>
+      <td class="tmDataTD"><input name="asunto" value="{$stASUNTO}" style="width:400px;" class="tmInput"></td>
+    </tr>
+    <tr>
+      <td class="tmFieldCaptionTD">Comentario *</td>
+      <td class="tmDataTD">
+      	<textarea class="tmInput" name="comentario" style="width:400px;height:200px;">{$stCOMENTARIO}</textarea>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" align="right">
+        <input name="btn_accion" type="submit" value="Aceptar" class="tmButton">
+        <input name="btn_volver" type="button" value="Cancelar" class="tmButton" onclick="location.href='{$stRUTAS.admin}index.php';">
+      </td>
+    </tr>
+  </table>
+</form>
+{include file="pie.tpl.html"}

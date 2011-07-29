@@ -1,0 +1,200 @@
+{include file="encabezado.tpl.html"}
+<script language="javascript" type="text/javascript" src="{$stRUTAS.jscript}yui/yahoo/yahoo-min.js"></script>
+<script language="javascript" type="text/javascript" src="{$stRUTAS.jscript}yui/connection/connection-min.js"></script>
+<script language="javascript" type="text/javascript" src="{$stRUTAS.jscript}valida_numeros.js"></script>
+<script language="javascript" type="text/javascript" src="{$stRUTAS.jscript}compra_venta.js"></script>
+<script language="javascript" type="text/javascript">
+{literal}
+function verDetalle(id){
+	var volver = document.getElementById('ruta_accion_actual').value;
+	var ruta = document.getElementById('ruta_valores').value;
+
+	document.location = ruta+'val.modificar.php?Id='+id+'&ruta_volver='+escape(volver)+'cmp.listar.php';
+}
+/**/
+function setTextLetra(letra){
+	document.getElementById('stext').value = letra;
+	document.getElementById('sselect').selectedIndex = 0;
+	document.getElementById('frm_cmp_listar').submit();
+}
+{/literal}
+</script>
+<table border="0" cellspacing="0" cellpadding="0" width="790">
+<tr><td height="5"></td></tr>
+<tr>
+  	<td>
+  	<form method="POST" id="frm_cmp_listar" action="cmp.listar.php" name="frmBusqueda">
+		<table cellpadding="0" cellspacing="0" border="0" width="790">
+			<tr>
+			<td class="tmFormHeaderFont"><img src='{$stRUTAS.images}analisisdecompra.gif' border='0'/></td>
+			{if $stUSUARIOS_DB}
+				<td align="right">Usuario</td>
+				<td align="right" width="205"><select name="usuario_db" class="tmSelect" style="width:200px;">{$stUSUARIOS_DB}</select></td>
+			{/if}
+			<td align="right">
+				<select name="sselect" id="sselect" class="tmSelect">
+					<option value="valSigla" {if $stSELECT=='valSigla'}selected{/if}>Sigla</option>
+					<option value="espNombre" {if $stSELECT=='espNombre'}selected{/if}>Especie</option>
+					<option value="valNombre" {if $stSELECT=='valNombre'}selected{/if}>Empresa</option>
+					<option value="paiNombre" {if $stSELECT=='paiNombre'}selected{/if}>Pa&iacute;s</option>
+					<option value="secNombre" {if $stSELECT=='secNombre'}selected{/if}>Sector</option>
+					<option value="monNombre" {if $stSELECT=='monNombre'}selected{/if}>Moneda</option>
+				</select>
+			</td>
+			<td align="right" width="135"><input type="text" id="stext" class="tmInput" name="stext" value="{$stSTEXT}"/></td>
+			<td align="right" width="63"><input name="btnBuscar" type="submit" value="Buscar" class="tmButton" style="height:20px;"></td>
+			</tr>
+			<tr>
+				<td colspan="6" align="right" style="border-bottom:1px solid #EFEDED;">
+					<table cellpadding="0" cellspacing="10" border="0">
+						<tr>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('A');">A</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('B');">B</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('C');">C</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('D');">D</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('E');">E</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('F');">F</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('G');">G</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('H');">H</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('I');">I</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('J');">J</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('K');">K</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('L');">L</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('M');">M</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('N');">N</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('O');">O</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('P');">P</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('Q');">Q</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('R');">R</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('S');">S</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('T');">T</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('U');">U</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('V');">V</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('W');">W</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('X');">X</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('Y');">Y</td>
+							<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('Z');">Z</td>
+						</tr>
+					</table>					
+				</td>
+			</tr>
+		</table>
+		</form>
+  	</td>
+  </tr>
+  <tr><td height="5"></td></tr>
+  <tr><td>
+<table cellpadding="2" cellspacing="0" class="tmFormTABLE">
+	<tr>
+		<td class="bordetab">&nbsp;</td>
+		<td class="bordetab" colspan="6" align="center" style="border-right:1px solid #8396A5;">Datos t&eacute;cnicos</td>
+		<td class="bordetab" colspan="4" align="center" style="border-right:1px solid #8396A5;">Rangos de compra</td>
+		<td class="bordetab" colspan="4" align="center">Datos generales de la empresa</td>
+		<td class="bordetab">&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="bordetab1" width="20" align="center" style="border-right:1px solid #8396A5;">I</td>
+		<td class="bordetab1" width="72" style="border-right:1px solid #8396A5;">
+			<a href="{$stRUTAS.cmp}cmp.listar.php?orden=sigla&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">Sigla</a>
+		</td>
+		<td class="bordetab1" width="15" style="border-right:1px solid #8396A5;" align="center">
+			<a href="{$stRUTAS.cmp}cmp.listar.php?orden=moneda&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">M.</a>
+		</td>
+		<td class="bordetab1" width="45" style="border-right:1px solid #8396A5;" align="right">
+			<a href="{$stRUTAS.cmp}cmp.listar.php?orden=precio&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">Precio</a>
+		</td>
+		<td class="bordetab1" width="44" style="border-right:1px solid #8396A5;" align="right">
+			<a href="{$stRUTAS.cmp}cmp.listar.php?orden=liquidez&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">Liq.</a>
+		</td>
+		<td class="bordetab1" width="60" style="border-right:1px solid #8396A5;" align="right">
+			<a href="{$stRUTAS.cmp}cmp.listar.php?fly_ord=Promedio&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">
+				Val. Prom.
+			</a>
+		</td>
+		<td class="bordetab1" width="45" style="border-right:1px solid #8396A5;" align="right">
+			<a href="{$stRUTAS.cmp}cmp.listar.php?fly_ord=Division&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">
+				V.P. / P.
+			</a>
+		</td>
+		<td class="bordetab1" width="40" style="border-right:1px solid #8396A5;" align="center">
+			<a href="{$stRUTAS.cmp}cmp.listar.php?fly_ord=RangoCB&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">
+				B.
+			</a>
+		</td>
+		<td class="bordetab1" width="38" style="border-right:1px solid #8396A5;" align="center">
+			<a href="{$stRUTAS.cmp}cmp.listar.php?fly_ord=RangoCMB&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">
+				M.B.
+			</a>
+		</td>
+		<td class="bordetab1" width="38" style="border-right:1px solid #8396A5;" align="center">
+			<a href="{$stRUTAS.cmp}cmp.listar.php?fly_ord=RangoCE&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">
+				Exc.
+			</a>
+		</td>
+		<td class="bordetab1" width="15" style="border-right:1px solid #8396A5;" align="center">
+			<a href="{$stRUTAS.cmp}cmp.listar.php?orden=tabla&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">T.</a>
+		</td>
+		<td class="bordetab1" width="150" style="border-right:1px solid #8396A5;">
+			<a href="{$stRUTAS.cmp}cmp.listar.php?orden=empresa&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">Empresa</a>
+		</td>
+		<td class="bordetab1" width="38" style="border-right:1px solid #8396A5;">
+			<a href="{$stRUTAS.cmp}cmp.listar.php?orden=sector&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">Sector</a>
+		</td>
+		<td class="bordetab1" width="26" style="border-right:1px solid #8396A5;">
+			<a href="{$stRUTAS.cmp}cmp.listar.php?orden=pais&sentido={$stSNT}&stext={$stSTEXT}&sselect={$stSELECT}" class="tmDataLinke">Pa&iacute;s</a>
+		</td>
+		<td class="bordetab1" width="25" style="border-right:1px solid #8396A5;" align="center">Prd.</td>
+		<td class="bordetab1" width="21">&nbsp;</td>
+	</tr>
+</table>
+<div class="div_contenido_cuerpo">
+<table cellpadding="2" cellspacing="0" class="tmFormTABLE" style="border-top:0px;">
+{foreach from=$stVALORES key=id item=valor}
+	<tr onmouseover="this.bgColor='#EFEFE7';" onMouseOut="this.bgColor='#FFFFFF';">
+		<td class='tmDataTD' width="19">
+			<a href='{$stRUTAS.cmp}cmp.mas_info.php?Id={$valor.Id}'>
+				<img src='{$stRUTAS.images}informacion.gif' title='M&aacute;s informaci&oacute;n' border='0'/>
+			</a>
+		</td>
+		<td class='tmDataTD' width="71" style="font-size:11px;cursor:pointer;" id="sigla_{$valor.Id}" onclick="verDetalle({$valor.Id});">{$valor.Sigla}</td>
+		<td class='tmDataTD' width="14" align="center">{$valor.Moneda}</td>
+		<td class='tmDataTD' width="43" align="right" id="precio_{$valor.Id}" bgcolor="#DDE9F7">{$valor.Precio|default:'--'}</td>
+		<td class='tmDataTD' width="43" align="right">{$valor.Liquidez|default:'--'}</td>
+		<td class='tmDataTD' width="59" align="right">{$valor.Promedio|default:'--'|string_format:"%.2f"}</td>
+		<td class='tmDataTD' width="44" align="right">{$valor.Division|string_format:"%.2f"}</td>
+		{if $valor.RangoCB}
+			<td class='tmDataTD' style="background-color:#EFEDED;" align="right" width="39">
+			{$valor.RangoCB|string_format:"%.2f"}
+		{else}<td class='tmDataTD' width="37">&nbsp;{/if}
+		</td>
+		{if $valor.RangoCMB}
+			<td class='tmDataTD' style="background-color:#F5FD9F;" align="right" width="37">
+			{$valor.RangoCMB|string_format:"%.2f"}
+		{else}<td class='tmDataTD' width="37">&nbsp;{/if}
+		</td>
+		{if $valor.RangoCE}
+			<td class='tmDataTD' style="background-color:#D6F9A2;" align="right" width="37">
+			{$valor.RangoCE|string_format:"%.2f"}
+		{else}<td class='tmDataTD' width="37">&nbsp;{/if}
+		</td>
+		<td class='tmDataTD' width="14" align="center">{$valor.Tabla}</td>
+		<td class='tmDataTD' width="149" style="font-size:11px;">{$valor.Empresa|default:'--'}</td>
+		<td class='tmDataTD' width="37" style="font-size:11px;">{$valor.Sector}</td>
+		<td class='tmDataTD' width="25">{$valor.Pais}</td>
+		<td class='tmDataTD' width="24" align="center">
+			<a href='http://ar.babelfish.yahoo.com/translate_url?doit=done&tt=url&intl=1&fr=bf-home&trurl=http%3A//finance.yahoo.com/q/pr?s={$valor.Sigla}&lp=en_es&btnTrUrl=Traducir' target="_blank">
+				<img src='{$stRUTAS.images}informacion_.gif' title='Perfil' border='0'/>
+			</a>
+		</td>
+		<td class='tmDataTD' align="center" width="19">
+			<img src='{$stRUTAS.images}comprar.gif' title='Comprar' border='0' onclick="getDatosPanel({$valor.Id},'Comprar');" style="cursor:pointer;"/>
+		</td>
+	</tr>
+{/foreach}
+</table>
+</div>
+	<input type="hidden" id="fechacorta_hoy" value="{$stFECHACORTA_HOY}">
+	<input type="hidden" id="ruta_accion_actual" value="{$stRUTAS.cmp}">
+	<input type="hidden" id="ruta_valores" value="{$stRUTAS.val}">
+</td></tr></table>
+{include file="pie.tpl.html"}

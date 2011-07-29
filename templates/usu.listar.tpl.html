@@ -1,0 +1,92 @@
+{include file="encabezado.tpl.html"}
+<table border="0" cellspacing="0" cellpadding="0">
+<tr><td height="5"></td></tr>
+<tr>
+  	<td>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+		<form method="POST" action="usu.listar.php" name="frmBusqueda">
+			<tr>
+			<td><font class="tmFormHeaderFont">LISTADO DE USUARIOS: </font></td>
+			<td align="right" width="180"><input type="text" name="texto" value="{$stTEXT}" size="30" class="tmInput" style="height:20px;"></td>
+			<td><input name="btnBuscar" type="submit" value="Buscar" class="tmButton" style="height:20px;"></td>
+			<td align="right"><input type="button" value="Nuevo usuario" class="tmButton" onclick="location.href='usu.registrar.php';" style="width:100px;height:20px;"></td>
+			</tr>
+		</form>
+		</table>
+  	</td>
+  </tr>
+  <tr><td height="5"></td></tr>
+  <tr><td>Hay {$stREG_TOTAL} usuarios</td></tr>
+  <tr><td><table align="right"><tr>
+	<td>
+		{if !$stLINKS.first}&nbsp;{else}
+			<a href="{$stLINKS.first}"><img src="{$stRUTAS.images}primero.gif" border="0"/></a>
+		{/if}
+	<td/><td>
+		{if !$stLINKS.previous}&nbsp;{else}
+			<a href="{$stLINKS.previous}"><img src="{$stRUTAS.images}anterior.gif" border="0"/></a>
+		{/if}
+	<td/>
+	<td>
+		{foreach from=$stPAGES item=link key=page}
+			{if $page == $stPAGE}{$page}&nbsp;
+			{else}<a class="tmNavigatorLink" href="{$link}">{$page}</a>&nbsp;{/if}
+		{/foreach}
+	</td>
+	<td>
+		{if !$stLINKS.next}&nbsp;{else}
+			<a href="{$stLINKS.next}"><img src="{$stRUTAS.images}siguiente.gif" border="0"/></a>
+		{/if}
+	<td/><td>
+		{if !$stLINKS.last}&nbsp;{else}
+			<a href="{$stLINKS.last}"><img src="{$stRUTAS.images}ultimo.gif" border="0"/></a>
+		{/if}
+	</td>
+	</tr></table></td></tr>
+  <tr><td>
+<form method="post" action="{$stRUTAS.usu}usu.borrar.php?confirmado=1">
+<table cellpadding="2" cellspacing="0" class="tmFormTABLE"> 
+	<tr>
+		<td class="tmColumnTD"><input type='checkbox' id="check_todos" name='check_todos' onclick="checkAll(document.getElementsByName('Id[]'));"/></td>
+		<td class="tmColumnTD" nowrap>&nbsp;</td>
+		<td class="tmColumnTD" nowrap width="120">
+			<a href="?{$stPARAMETROS}orden=login&sentido={$stSNT}&page={$stPAGE}" class="tmDataLinke">Login</a>
+		</td>
+		<td class="tmColumnTD" nowrap width="200">
+			<a href="?{$stPARAMETROS}orden=apellido&sentido={$stSNT}&page={$stPAGE}" class="tmDataLinke">Nombre</a>
+		</td>
+		<td class="tmColumnTD" nowrap width="295">
+			<a href="?{$stPARAMETROS}orden=personal&sentido={$stSNT}&page={$stPAGE}" class="tmDataLinke">Email</a>
+		</td>
+		<td class="tmColumnTD" nowrap width="70">
+			<a href="?{$stPARAMETROS}orden=habilitado&sentido={$stSNT}&page={$stPAGE}" class="tmDataLinke">Estado</a>
+		</td>
+		<td class="tmColumnTD" nowrap>&nbsp;</td>
+	</tr>	
+{	foreach from=$stUSUARIOS key=id item=usuario}
+	<tr onmouseover="this.bgColor='#EFEFE7';" onMouseOut="this.bgColor='#FFFFFF';">
+		<td class='tmDataTD'><input type='checkbox' name='Id[]' value='{$id}' /></td>
+		<td class='tmDataTD' valign="middle">
+			<a href='{$stRUTAS.usu}usu.modificar.php?Id={$id}'>
+				<img src='{$stRUTAS.images}editar.gif' title='Modificar' border='0'/>
+			</a>
+		</td>
+		<td class='tmDataTD'>
+			<a class='tmDataLink' href='{$stRUTAS.usu}usu.modificar.php?Id={$id}'>{$usuario.Login}</a>
+		</td>
+		<td class='tmDataTD'>{$usuario.Nombre}</td>
+		<td class='tmDataTD'>{$usuario.Personal}</td>
+		<td class='tmDataTD'>{$usuario.Enabled}</td>
+		<td class='tmDataTD'>
+			<a href='{$stRUTAS.usu}usu.borrar.php?Id[]={$id}' onclick="return confirmLink(this,'Confirma la eliminación?')">
+				<img src='{$stRUTAS.images}borrar.gif' title='Borrar' border='0'/>
+			</a>
+		</td>
+	</tr>
+{ /foreach}
+<tr><td height="5"></td></tr>
+<tr><td colspan="7" align="right"><input style="width:140px;" type="submit" name="btn_borrar" value="Borrar seleccionados" class="tmButton" onclick="return confirm('Confirma la eliminación?');"></td></tr>
+</table>
+</form>
+</td></tr></table>
+{include file="pie.tpl.html"}

@@ -1,0 +1,30 @@
+{include file="encabezado.tpl.html"}
+<table>
+{section name=iLink loop=$stLINKS}
+	{if !$smarty.section.iLink.first}
+	<tr><td height="5"></td></tr>
+	{/if}
+	<tr><td><a class='tmDataLink' href='{$stLINKS[iLink].link}'>{$stLINKS[iLink].desc}</a></td></tr>
+	<tr><td height="5"></td></tr>
+{/section}
+<tr><td height="10"></td></tr>
+<tr>
+	<td>{$stMESSAGE}</td>
+</tr>
+{if $stUSUARIOS_DB}
+<tr><td height="10"></td></tr>
+<tr>
+	<td>
+	<form method="POST" action="{$stPREFIJO_ACCION}.listar.php" name="frmBusqueda">
+		<table cellpadding="0" cellspacing="0" border="0">
+		<tr>
+			<td><select name="usuario_db" class="tmSelect" style="width:200px;">{$stUSUARIOS_DB}</select></td>
+			<td><input name="btnBuscar" type="submit" value="Buscar" class="tmButton" style="height:20px;"></td>
+		</tr>
+		</table>
+	</form>
+	</td>
+</tr>
+{/if}
+</table>
+{include file="pie.tpl.html"}

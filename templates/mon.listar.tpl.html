@@ -1,0 +1,49 @@
+{include file="encabezado.tpl.html"}
+<table border="0" cellspacing="0" cellpadding="0">
+<tr><td height="5"></td></tr>
+<tr>
+  	<td>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			<tr>
+			<td class="tmFormHeaderFont">LISTADO DE MONEDAS: </td>
+			<td align="right"><input type="button" value="Nueva moneda" class="tmButton" onclick="location.href='mon.registrar.php';" style="height:20px;"></td>
+			</tr>
+		</table>
+  	</td>
+  </tr>
+  <tr><td height="10"></td></tr>
+  <tr><td>
+<form method="post" action="{$stRUTAS.mon}mon.borrar.php?confirmado=1">
+<table cellpadding="2" cellspacing="0" class="tmFormTABLE"> 
+	<tr>
+		<td class="tmColumnTD"><input type='checkbox' name='check_todos' id="check_todos" onclick="checkAll(document.getElementsByName('Id[]'));"/></td>
+		<td class="tmColumnTD" nowrap>&nbsp;</td>
+		<td class="tmColumnTD" nowrap width="50">C&oacute;digo</td>
+		<td class="tmColumnTD" nowrap width="408">Detalle</td>
+		<td class="tmColumnTD" nowrap>&nbsp;</td>
+	</tr>	
+{	foreach from=$stVALORES key=id item=valor}
+	<tr onmouseover="this.bgColor='#EFEFE7';" onMouseOut="this.bgColor='#FFFFFF';">
+		<td class='tmDataTD'><input type='checkbox' name='Id[]' value='{$id}' /></td>
+		<td class='tmDataTD' valign="middle">
+			<a href='{$stRUTAS.mon}mon.modificar.php?Id={$id}'>
+				<img src='{$stRUTAS.images}editar.gif' title='Modificar' border='0'/>
+			</a>
+		</td>
+		<td class='tmDataTD' align="center">
+			<a class='tmDataLink' href='{$stRUTAS.mon}mon.modificar.php?Id={$id}'>{$valor.Codigo}</a>
+		</td>
+		<td class='tmDataTD'>{$valor.Nombre}</td>
+		<td class='tmDataTD'>
+			<a href='{$stRUTAS.mon}mon.borrar.php?Id[]={$id}' onclick="return confirmLink(this,'Confirma la eliminación?')">
+				<img src='{$stRUTAS.images}borrar.gif' title='Borrar' border='0'/>
+			</a>
+		</td>
+	</tr>
+{ /foreach}
+<tr><td height="5"></td></tr>
+<tr><td colspan="7" align="right"><input style="width:140px;" type="submit" name="btn_borrar" value="Borrar seleccionadas" class="tmButton" onclick="return confirm('Confirma la eliminación?');"></td></tr>
+</table>
+</form>
+</td></tr></table>
+{include file="pie.tpl.html"}
