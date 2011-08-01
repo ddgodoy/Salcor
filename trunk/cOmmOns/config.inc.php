@@ -11,10 +11,11 @@
 	} else {
 		$DEBUG = FALSE;
 		$SMARTY_DEBUG = FALSE;
-		define('SMARTY_DIR', '/www/docs/salcor.com.ar/public_html/_Smarty/libs/');
+		define('SMARTY_DIR', '/var/www/vhosts/salcor.com.ar/httpdocs/_Smarty/libs/');
 	
-		$_PATH['ROOT'] = '/www/docs/salcor.com.ar/public_html/';
-		$_PATH['WEB'] = 'http://www.salcor.com.ar/';
+		$_PATH['ROOT'] = '/var/www/vhosts/salcor.com.ar/httpdocs/';
+//		$_PATH['WEB'] = 'http://www.salcor.com.ar/';
+		$_PATH['WEB'] = 'https://www.hostingapp.net:8443/sitepreview/http/salcor.com.ar/';
 	}
   define('SUPER_ADMIN', 'admin');
 
