@@ -95,23 +95,28 @@
 					 <table cellpadding="0" cellspacing="0" width="100%" border="0">
 					<tr>
 						<td width="80">
-							<img src="{$stRUTAS.images}trian.png" width="16" height="16"><a href="{$stRUTAS.admin}contenido.php" style="color:#CCCCCC;text-decoration:none;"><strong> Inicio</strong></a>						</td>
-						<td style="color:#cccccc;" width="100">
-						  
-						  <img src="{$stRUTAS.images}trian.png" width="16" height="16"> <span>{if $stUSUARIO_LINK_DATOS}
-							<a href="{$stUSUARIO_LINK_DATOS}" style="color:#cccccc;text-decoration:none;">
-								<strong>Mis datos</strong>							</a>
-						{else}
-							<a href="{$stRUTAS.admin}registro.php" style="color:#cccccc;text-decoration:none;">
-								<strong>Registro</strong>							</a>
-						{/if}</span>						</td>
-						<td style="color:#DE4603;" width="90">
-							<img src="{$stRUTAS.images}trian.png" width="16" height="16"> <a href="{$stRUTAS.admin}contacto{if !$stCONTENIDO}_out{/if}.php" style="color:#CCCCCC;text-decoration:none;"><strong>Contacto</strong>							</a>						</td>
-						{if $stCONTENIDO}
-						<td style="color:#DE4603;">
+							<img src="{$stRUTAS.images}trian.png" width="16" height="16" style="vertical-align:middle;">
+							<a href="{$stRUTAS.admin}contenido.php" style="color:#CCCCCC;text-decoration:none;"><strong> Inicio</strong></a>
 						</td>
-						<td style="color:#DE4603;" align="right">
-							<a href="{$stRUTAS.admin}logout.php" style="color:#CCCCCC;text-decoration:none;"><strong>Salir</strong></a></td>
+						<td style="color:#cccccc;" width="100">
+						  <img src="{$stRUTAS.images}trian.png" width="16" height="16" style="vertical-align:middle;">
+						  <span>
+						  	{if $stUSUARIO_LINK_DATOS}
+									<a href="{$stUSUARIO_LINK_DATOS}" style="color:#cccccc;text-decoration:none;"><strong>Mis datos</strong></a>
+								{else}
+									<a href="{$stRUTAS.admin}registro.php" style="color:#cccccc;text-decoration:none;"><strong>Registro</strong></a>
+								{/if}
+							</span>
+						</td>
+						<td style="color:#DE4603;" width="90">
+							<img src="{$stRUTAS.images}trian.png" width="16" height="16" style="vertical-align:middle;">
+							<a href="{$stRUTAS.admin}contacto{if !$stCONTENIDO}_out{/if}.php" style="color:#CCCCCC;text-decoration:none;">
+								<strong>Contacto</strong>
+							</a>
+						</td>
+						{if $stCONTENIDO}
+							<td style="color:#DE4603;"></td>
+							<td style="color:#DE4603;" align="right"><a href="{$stRUTAS.admin}logout.php" style="color:#CCCCCC;text-decoration:none;"><strong>Salir</strong></a></td>
 						{/if}
 					</tr>
 					</table>

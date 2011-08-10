@@ -4,7 +4,7 @@
 	require_once getLocal('COMMONS').'class.mysql.inc.php';
 
 	if (isset($_SESSION['_usuId'])){redireccionar(getWeb('ADMIN').'contenido.php');}
-	
+
 	$oMyDB = new clsMyDB();
 	$stERROR = '';
 	$stLOGIN = '';
