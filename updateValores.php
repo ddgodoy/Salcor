@@ -5,16 +5,20 @@
 	$oMyDB  = new clsMyDB();
 	$oValor = new clsValores();
 
-	$rValores = $oMyDB->Query("SELECT DISTINCT valSigla FROM valores WHERE valEstado = 'A' AND (valUpdated_at < CURDATE() OR valUpdated_at is null) LIMIT 200;");
+	$valores_IN = '';
+	$rValores = $oMyDB->Query("SELECT DISTINCT valSigla FROM valores WHERE valEstado = 'A' ORDER BY valUpdated_at ASC LIMIT 200;");
 
-	if ($rValores) {
-		while ($fila = mysql_fetch_assoc($rValores)) {
-			$aSiglas[] = $fila['valSigla'];
-		}
+	while ($rValores && $fila = mysql_fetch_assoc($rValores)) {
+		$aSiglas[] = $fila['valSigla'];
+		$valores_IN .= "'".$fila['valSigla']."',";
+	}
+	$valores_IN = substr($valores_IN, 0, -1);
+	
+	if (!empty($valores_IN)) {
 		$aInfo = $oValor->getUltimosDatosBySiglas($aSiglas, getLocal('FINANCE'));
-		//
-		$r = $oMyDB->Query("SELECT valId, valSigla FROM valores WHERE valEstado = 'A' AND (valUpdated_at < CURDATE() OR valUpdated_at is null) LIMIT 100;");
-
+		
+		$r = $oMyDB->Query("SELECT valId, valSigla FROM valores WHERE valSigla IN ($valores_IN);");
+		
 		while ($r && $fila = mysql_fetch_assoc($r)) {
 			$campos   = '';
 			$id_valor = $fila['valId'];
