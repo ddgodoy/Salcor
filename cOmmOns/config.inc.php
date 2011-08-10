@@ -1,21 +1,20 @@
 <?php
 	session_start();
 
-	if (strtolower($_SERVER['SERVER_NAME']) == 'localhost'){
+	if (strtolower($_SERVER['SERVER_NAME']) == 'localhost') {
 		$DEBUG = TRUE;
 		$SMARTY_DEBUG = FALSE;
 		define('SMARTY_DIR', $_SERVER['DOCUMENT_ROOT'].'/_Smarty/libs/');
 	
-		$_PATH['ROOT'] = $_SERVER['DOCUMENT_ROOT'].'/salcor/';
-		$_PATH['WEB'] = 'http://localhost/salcor/';
+		$_PATH['ROOT'] = $_SERVER['DOCUMENT_ROOT'].'/salcor2/';
+		$_PATH['WEB'] = 'http://localhost/salcor2/';
 	} else {
 		$DEBUG = FALSE;
 		$SMARTY_DEBUG = FALSE;
 		define('SMARTY_DIR', '/var/www/vhosts/salcor.com.ar/httpdocs/_Smarty/libs/');
 	
 		$_PATH['ROOT'] = '/var/www/vhosts/salcor.com.ar/httpdocs/';
-//		$_PATH['WEB'] = 'http://www.salcor.com.ar/';
-		$_PATH['WEB'] = 'https://www.hostingapp.net:8443/sitepreview/http/salcor.com.ar/';
+		$_PATH['WEB'] = 'http://www.salcor.com.ar/';
 	}
   define('SUPER_ADMIN', 'admin');
 

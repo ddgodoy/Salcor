@@ -7,10 +7,16 @@
 		var $linkDB;
 		var $Errores = array();
 
-//		function clsMyDB($host='localhost', $user='uv7119', $pass='indio174muz', $database='uv7119_salcor'){
-		function clsMyDB($host='localhost', $user='root', $pass='123', $database='salcor'){
+		function clsMyDB($host='localhost', $user='salcoricoxu', $pass='salcoricoxp', $database='salcoricox')
+		{
+			if (strtolower($_SERVER['SERVER_NAME']) == 'localhost') {
+				$user = 'root';
+				$pass = '123';
+				$database = 'salcor';
+			}
 			$this->Connect($host, $user, $pass, $database);
 		}
+		//
 		function Connect($host = '', $user = '', $pass = '', $database=''){
 			$this->Errores = array();
 			$this->Host = $host;
