@@ -442,13 +442,13 @@
 			$api->addOption("symbol");
 			$api->addOption("lastTrade");					 	 	 // ultima transaccion
 			$api->addOption("averageDailyVolume"); 	 	 // volumen promedio
-			$api->addOption("change");						 	 	 // variacion anual
 			$api->addOption("dividendYeild");			 	 	 // rendimiento
 			$api->addOption("marketCapitalization"); 	 // capitalizacion
 			$api->addOption("EPSEstimateCurrentYear"); // eps estimado
 			$api->addOption("priceEarningsRatio"); 		 // p/g
 			$api->addOption("dividendPerShare");  		 // dividendos por accion
 			$api->addOption("name");	  					 	 	 // nombre empresa
+			$api->addOption(YahooFinance_Options::FIFTY_TWO_WEEK_RANGE); // 52 week range
 
 			foreach ($siglas as $sigla) {
 				$api->addSymbol($sigla);
@@ -461,12 +461,12 @@
 				foreach ($quotes as $quote) {
 					$stock_value['ultima']    = $quote->lastTrade;
 					$stock_value['volumen']   = $quote->averageDailyVolume;
-					$stock_value['variacion'] = $quote->change;
 					$stock_value['nombre']    = $quote->name;
 					$stock_value['rendim']    = $quote->dividendYeild;
 					$stock_value['ganaccion'] = $quote->EPSEstimateCurrentYear;
 					$stock_value['pg']        = $quote->priceEarningsRatio;
 					$stock_value['divaccion'] = $quote->dividendPerShare;
+					$stock_value['variacion'] = $quote->get(YahooFinance_Options::FIFTY_TWO_WEEK_RANGE);
 					$stock_value['capitalizacion'] = $quote->marketCapitalization;
 
 					$respuesta[$quote->symbol] = $stock_value;
