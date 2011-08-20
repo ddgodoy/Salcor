@@ -16,7 +16,7 @@
 	
 	if (!empty($valores_IN)) {
 		$aInfo = $oValor->getUltimosDatosBySiglas($aSiglas, getLocal('FINANCE'));
-		
+
 		$r = $oMyDB->Query("SELECT valId, valSigla FROM valores WHERE valSigla IN ($valores_IN);");
 		
 		while ($r && $fila = mysql_fetch_assoc($r)) {
@@ -29,20 +29,63 @@
 				$oValor->findId($id_valor);
 				$liquidez = $oValor->getValorLiquidez($aInfo[$valSigla]['volumen']);
 
-				$campos .= !empty($aInfo[$valSigla]['ultima'])    ? "valUltima = '".   $aInfo[$valSigla]['ultima']."',"    : '';
-				$campos .= !empty($aInfo[$valSigla]['volumen'])   ? "valVolumen = '".  $aInfo[$valSigla]['volumen']."',"   : '';
-				$campos .= !empty($aInfo[$valSigla]['variacion']) ? "valVariacion = '".$aInfo[$valSigla]['variacion']."'," : '';
-				$campos .= !empty($aInfo[$valSigla]['nombre'])    ? "valNombre = '".   $aInfo[$valSigla]['nombre']."',"    : '';
-				$campos .= !empty($aInfo[$valSigla]['rendim'])    ? "valRendim = '".   $aInfo[$valSigla]['rendim']."',"    : '';
-				$campos .= !empty($aInfo[$valSigla]['divaccion']) ? "valDivAccion = '".$aInfo[$valSigla]['divaccion']."'," : '';
-				$campos .= !empty($aInfo[$valSigla]['pg'])        ? "valPG = '".       $aInfo[$valSigla]['pg']."',"        : '';
-				$campos .= !empty($aInfo[$valSigla]['ganaccion']) ? "valGanAccion = '".$aInfo[$valSigla]['ganaccion']."'," : '';
-				$campos .= !empty($aInfo[$valSigla]['capitalizacion']) ? "valCapitalizacion = '".$aInfo[$valSigla]['capitalizacion']."',": '';
-				$campos .= !empty($liquidez) ? "valLiquidez = '".$liquidez."',": '';
+				if (!empty($aInfo[$valSigla]['ultima'])) {
+					$campos .= " valUltima = '".$aInfo[$valSigla]['ultima']."', ";
+				}
+				if (!empty($aInfo[$valSigla]['volumen'])) {
+					$campos .= " valVolumen = '".$aInfo[$valSigla]['volumen']."', ";
+				}
+				if (!empty($aInfo[$valSigla]['variacion']))
+				{
+					if (strpos($aInfo[$valSigla]['variacion'], 'N/A') === false && strpos($aInfo[$valSigla]['variacion'], '"') === false)
+					{
+						$campos .= " valVariacion = '".$aInfo[$valSigla]['variacion']."', ";
+					}
+				}
+				if (!empty($aInfo[$valSigla]['nombre'])) {
+					$campos .= " valNombre = '".$aInfo[$valSigla]['nombre']."', ";
+				}
+				if (!empty($aInfo[$valSigla]['rendim']))
+				{
+					if (strpos($aInfo[$valSigla]['rendim'], 'N/A') === false)
+					{
+						$campos .= " valRendim = '".$aInfo[$valSigla]['rendim']."', ";
+					}
+				}
+				if (!empty($aInfo[$valSigla]['divaccion']))
+				{
+					if (strpos($aInfo[$valSigla]['divaccion'], 'N/A') === false)
+					{
+						$campos .= " valDivAccion = '".$aInfo[$valSigla]['divaccion']."', ";
+					}
+				}
+				if (!empty($aInfo[$valSigla]['pg']))
+				{
+					if (strpos($aInfo[$valSigla]['pg'], 'N/A') === false)
+					{
+						$campos .= " valPG = '".$aInfo[$valSigla]['pg']."', ";
+					}
+				}
+				if (!empty($aInfo[$valSigla]['ganaccion']))
+				{
+					if (strpos($aInfo[$valSigla]['ganaccion'], 'N/A') === false)
+					{
+						$campos .= " valGanAccion = '".$aInfo[$valSigla]['ganaccion']."', ";
+					}
+				}
+				if (!empty($aInfo[$valSigla]['capitalizacion']))
+				{
+					if (strpos($aInfo[$valSigla]['capitalizacion'], 'N/A') === false)
+					{
+						$campos .= " valCapitalizacion = '".$aInfo[$valSigla]['capitalizacion']."', ";
+					}
+				}
+				if (!empty($liquidez)) {
+					$campos .=  " valLiquidez = '".$liquidez."', ";
+				}
 			}
-			if ($campos != '') {
-				$oMyDB->Command("UPDATE valores SET $campos valUpdated_at = NOW() WHERE valId = $id_valor;");
-			}
+			//
+			$oMyDB->Command("UPDATE valores SET $campos valUpdated_at = NOW() WHERE valId = $id_valor;");
 		}
 	}
 ?>
