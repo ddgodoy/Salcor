@@ -69,6 +69,9 @@
 	var badHdlAddSugerencia = function(o){}
 {/literal}
 </script>
+<style type="text/css">
+	.lnkAlpha {ldelim} cursor:pointer; text-decoration:underline; {rdelim}
+</style>
 <!-- inicio panel sugerido -->
 <div class="div_panel_sug" id="id_div_panel_sug">
 	<table cellpadding="0" cellspacing="0" width="100%" border="0">
@@ -130,7 +133,7 @@
 <tr>
 	<td>
 <form method="POST" id="frm_val_listar" action="val.listar.php" name="frmBusqueda">
-<table cellpadding="0" cellspacing="0" border="0" width="790">
+<table cellpadding="0" cellspacing="0" border="0" width="830">
 	<tr>
 		<td colspan="5" style="border-bottom:1px solid #EFEDED;padding-bottom:5px;">
 			<table cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -178,32 +181,32 @@
 		<td style="border-bottom:1px solid #EFEDED;">
 			<table cellpadding="0" cellspacing="10" border="0">
 				<tr>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('A');">A</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('B');">B</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('C');">C</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('D');">D</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('E');">E</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('F');">F</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('G');">G</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('H');">H</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('I');">I</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('J');">J</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('K');">K</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('L');">L</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('M');">M</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('N');">N</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('O');">O</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('P');">P</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('Q');">Q</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('R');">R</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('S');">S</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('T');">T</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('U');">U</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('V');">V</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('W');">W</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('X');">X</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('Y');">Y</td>
-					<td style="cursor:pointer;text-decoration:underline;" onclick="setTextLetra('Z');">Z</td>
+					<td class="lnkAlpha" onclick="setTextLetra('A');">A</td>
+					<td class="lnkAlpha" onclick="setTextLetra('B');">B</td>
+					<td class="lnkAlpha" onclick="setTextLetra('C');">C</td>
+					<td class="lnkAlpha" onclick="setTextLetra('D');">D</td>
+					<td class="lnkAlpha" onclick="setTextLetra('E');">E</td>
+					<td class="lnkAlpha" onclick="setTextLetra('F');">F</td>
+					<td class="lnkAlpha" onclick="setTextLetra('G');">G</td>
+					<td class="lnkAlpha" onclick="setTextLetra('H');">H</td>
+					<td class="lnkAlpha" onclick="setTextLetra('I');">I</td>
+					<td class="lnkAlpha" onclick="setTextLetra('J');">J</td>
+					<td class="lnkAlpha" onclick="setTextLetra('K');">K</td>
+					<td class="lnkAlpha" onclick="setTextLetra('L');">L</td>
+					<td class="lnkAlpha" onclick="setTextLetra('M');">M</td>
+					<td class="lnkAlpha" onclick="setTextLetra('N');">N</td>
+					<td class="lnkAlpha" onclick="setTextLetra('O');">O</td>
+					<td class="lnkAlpha" onclick="setTextLetra('P');">P</td>
+					<td class="lnkAlpha" onclick="setTextLetra('Q');">Q</td>
+					<td class="lnkAlpha" onclick="setTextLetra('R');">R</td>
+					<td class="lnkAlpha" onclick="setTextLetra('S');">S</td>
+					<td class="lnkAlpha" onclick="setTextLetra('T');">T</td>
+					<td class="lnkAlpha" onclick="setTextLetra('U');">U</td>
+					<td class="lnkAlpha" onclick="setTextLetra('V');">V</td>
+					<td class="lnkAlpha" onclick="setTextLetra('W');">W</td>
+					<td class="lnkAlpha" onclick="setTextLetra('X');">X</td>
+					<td class="lnkAlpha" onclick="setTextLetra('Y');">Y</td>
+					<td class="lnkAlpha" onclick="setTextLetra('Z');">Z</td>
 				</tr>
 			</table>
 		</td>
@@ -310,7 +313,7 @@
 		<td class='tmDataTD' width="70" style="font-size:11px;" align="right">{$valor.Volumen|default:'--'}</td>
 		<td class='tmDataTD' width="42" style="font-size:11px;" align="center">{$valor.Estado}</td>
 		<td class='tmDataTD' width="20" align="center">
-			<a href='{$stRUTAS.val}val.borrar.php?Id[]={$valor.Id}' onclick="return confirmLink(this,'Confirma la eliminación?')">
+			<a href='{$stRUTAS.val}val.borrar.php?Id[]={$valor.Id}' onclick="return confirmLink(this,'Confirma la eliminaciï¿½n?')">
 				<img src='{$stRUTAS.images}borrar.gif' title='Borrar' border='0'/>
 			</a>
 		</td>

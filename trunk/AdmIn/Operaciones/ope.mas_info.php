@@ -17,7 +17,7 @@
 /*------------------------------------------------------------------------------------------------*/
 	if (empty($_REQUEST['Id'])){
 		$oSmarty->assign ('stTITLE'  , 'Detalle del valor');
-		$oSmarty->assign ('stMESSAGE', 'No puede entrar a esta página directamente.');
+		$oSmarty->assign ('stMESSAGE', 'No puede entrar a esta pï¿½gina directamente.');
 		$oSmarty->display('information.tpl.html');
 		exit();
 	}
@@ -36,24 +36,10 @@
 	$stNOMBRE = $oValor->getNombre();
 	$stPERIODO = empty($_REQUEST['periodo'])?'3m':$_REQUEST['periodo'];
 /*------------------------------------------------------------------------------------------------*/
-	if (@$handlePAGINA = fopen("http://ar.finance.yahoo.com/q?s=$stSIGLA&d=c&k=c4",'r')){
-		$stTEXTO = '';
-		while (!feof($handlePAGINA)){
-			$stTEXTO .= fgets($handlePAGINA, 10240);
-		}
-		fclose($handlePAGINA);
+	$aInfo = $oValor->getUltimosDatosBySiglas(array($stSIGLA), getLocal('FINANCE'));
 
-		$cadenaINI = "&Uacute;ltima transacci&oacute;n";
-		$cadenaFIN = "<\/td><\/tr><tr><td><small>";
-
-		preg_match("/$cadenaINI(.*)$cadenaFIN/s", $stTEXTO, $xRESULT);
-
-		if (!empty($xRESULT[1])){
-			$aux_tabla = '<table><tr align=center valign=top><td nowrap>&Uacute;ltima transacci&oacute;n';
-			$fix_tabla = cleanTabla($aux_tabla.rtrim($xRESULT[1]));
-
-			$oSmarty->assign('stTABLA', $fix_tabla);
-		}
+	if (count($aInfo) > 0) {
+		$oSmarty->assign('stDATOSTABLA', $aInfo);
 	}
 /*------------------------------------------------------------------------------------------------*/
 	$oSmarty->assign('stID', $stID);
