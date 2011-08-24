@@ -2,11 +2,12 @@
 	require_once '../../cOmmOns/config.inc.php';
 	require_once getLocal('ADMIN').'menu.inc.php';
 /*------------------------------------------------------------------------------------------------*/
-	function cleanTabla($cadena){
+	function cleanTabla($cadena)
+	{
 		$cadenaKEY = '<a';
 		$inicioValor = strpos($cadena, $cadenaKEY);
 
-		if ($inicioValor !== false){
+		if ($inicioValor !== false) {
 			$auxLimite = strpos($cadena, 'd>', $inicioValor) + 1;
 			$fixLimite = $auxLimite - $inicioValor;
 
@@ -15,9 +16,10 @@
 		return $cadena;
 	}
 /*------------------------------------------------------------------------------------------------*/
-	if (empty($_REQUEST['Id'])){
+	if (empty($_REQUEST['Id']))
+	{
 		$oSmarty->assign ('stTITLE'  , 'Detalle del valor');
-		$oSmarty->assign ('stMESSAGE', 'No puede entrar a esta página directamente.');
+		$oSmarty->assign ('stMESSAGE', 'No puede entrar a esta pï¿½gina directamente.');
 		$oSmarty->display('information.tpl.html');
 		exit();
 	}
@@ -26,19 +28,29 @@
 	require_once getLocal('VAL').'class.valores.inc.php';
 
 	$oValor = new clsValores();
-	if (!$oValor->findId($stID)){
+
+	if (!$oValor->findId($stID))
+	{
 		$oSmarty->assign ('stTITLE'  , 'Detalle del valor');
 		$oSmarty->assign ('stMESSAGE', $oValor->getErrores());
 		$oSmarty->display('information.tpl.html');
 		exit();
 	}
-	$stSIGLA = $oValor->getSigla();
-	$stNOMBRE = $oValor->getNombre();
-	$stPERIODO = empty($_REQUEST['periodo'])?'3m':$_REQUEST['periodo'];
+	$stSIGLA   = $oValor->getSigla();
+	$stNOMBRE  = $oValor->getNombre();
+	$stPERIODO = empty($_REQUEST['periodo']) ? '3m' : $_REQUEST['periodo'];
 /*------------------------------------------------------------------------------------------------*/
-	if (@$handlePAGINA = fopen("http://ar.finance.yahoo.com/q?s=$stSIGLA&d=c&k=c4",'r')){
+	$aInfo = $oValor->getUltimosDatosBySiglas(array($stSIGLA), getLocal('FINANCE'));
+
+	if (count($aInfo) > 0) {
+		$oSmarty->assign('stDATOSTABLA', $aInfo);
+	}
+	/*
+	if (@$handlePAGINA = fopen("http://ar.finance.yahoo.com/q?s=$stSIGLA&d=c&k=c4",'r'))
+	{
 		$stTEXTO = '';
-		while (!feof($handlePAGINA)){
+
+		while (!feof($handlePAGINA)) {
 			$stTEXTO .= fgets($handlePAGINA, 10240);
 		}
 		fclose($handlePAGINA);
@@ -48,13 +60,14 @@
 
 		preg_match("/$cadenaINI(.*)$cadenaFIN/s", $stTEXTO, $xRESULT);
 
-		if (!empty($xRESULT[1])){
+		if (!empty($xRESULT[1])) {
 			$aux_tabla = '<table><tr align=center valign=top><td nowrap>&Uacute;ltima transacci&oacute;n';
 			$fix_tabla = cleanTabla($aux_tabla.rtrim($xRESULT[1]));
 
 			$oSmarty->assign('stTABLA', $fix_tabla);
 		}
 	}
+	*/
 /*------------------------------------------------------------------------------------------------*/
 	$oSmarty->assign('stID', $stID);
 	$oSmarty->assign('stSIGLA'  , $stSIGLA);
