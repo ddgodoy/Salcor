@@ -37,9 +37,12 @@
 				}
 				if (!empty($aInfo[$valSigla]['variacion']))
 				{
-					if (strpos($aInfo[$valSigla]['variacion'], 'N/A') === false && strpos($aInfo[$valSigla]['variacion'], '"') === false)
+					if (strpos($aInfo[$valSigla]['variacion'], 'N/A') === false)
 					{
-						$campos .= " valVariacion = '".$aInfo[$valSigla]['variacion']."', ";
+						if (strpos($aInfo[$valSigla]['variacion'], '"') === false)
+						{
+							$campos .= " valVariacion = '".$aInfo[$valSigla]['variacion']."', ";
+						}
 					}
 				}
 				if (!empty($aInfo[$valSigla]['nombre'])) {
@@ -83,8 +86,9 @@
 				if (!empty($liquidez)) {
 					$campos .=  " valLiquidez = '".$liquidez."', ";
 				}
+				// check not valid value
+				/**/
 			}
-			//
 			$oMyDB->Command("UPDATE valores SET $campos valUpdated_at = NOW() WHERE valId = $id_valor;");
 		}
 	}
