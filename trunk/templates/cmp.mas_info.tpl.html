@@ -10,9 +10,14 @@
 		text-decoration: none;
 		color: #31414E;
 	}
+	.tdValBorde{
+		border-bottom: 1px solid #CCCCCC;
+		padding: 10px;
+	}
 </style>
 <script language="javascript" type="text/javascript">
-	function submitMasInfo(periodo){
+	function submitMasInfo(periodo)
+	{
 		document.getElementById('periodo').value = periodo;
 		document.forms[0].submit();
 	}
@@ -61,10 +66,47 @@
   <tr><td height="10"></td></tr>
   <tr>
   	<td align="center" width="100%">
-  		{$stTABLA|default:'Datos no disponibles'}
+  		{if $stDATOSTABLA}
+  		<div>{$stDATOSTABLA[$stSIGLA].xx}</div>
+  			<table cellpadding="0" cellspacing="0" width="100%">
+  				<tr>
+  					<td class="tdValBorde" width="30%">&Uacute;ltima cotizaci&oacute;n:</td><td class="tdValBorde"><strong>{$stDATOSTABLA[$stSIGLA].ultima}</strong></td>
+  					<td class="tdValBorde" width="30%">Rango del d&iacute;a:</td><td class="tdValBorde"><strong>{$stDATOSTABLA[$stSIGLA].rango_dia}</strong></td>
+  				</tr>
+  				<tr>
+  					<td class="tdValBorde">Fecha de cotizaci&oacute;n:</td><td class="tdValBorde"><strong>{$stDATOSTABLA[$stSIGLA].ult_fecha|date_format:"%d/%m/%Y"}</strong></td>
+  					<td class="tdValBorde">Rango 52s:</td><td class="tdValBorde"><strong>{$stDATOSTABLA[$stSIGLA].variacion}</strong></td>
+  				</tr>
+  				<tr>
+  					<td class="tdValBorde">Variaci&oacute;n:</td><td class="tdValBorde"><strong>{$stDATOSTABLA[$stSIGLA].cambio}</strong></td>
+  					<td class="tdValBorde">Volumen:</td><td class="tdValBorde"><strong>{$stDATOSTABLA[$stSIGLA].volumen|number_format:0:"":"."}</strong></td>
+  				</tr>
+  				<tr>
+  					<td class="tdValBorde">Cierre anterior:</td><td class="tdValBorde"><strong>{$stDATOSTABLA[$stSIGLA].cierre_ant}</strong></td>
+  					<td class="tdValBorde">Vol. promedio (3m):</td><td class="tdValBorde"><strong>{$stDATOSTABLA[$stSIGLA].vol_promedio|number_format:0:"":"."}</strong></td>
+  				</tr>
+  				<tr>
+  					<td class="tdValBorde">Precio apertura:</td><td class="tdValBorde"><strong>{$stDATOSTABLA[$stSIGLA].apertura}</strong></td>
+  					<td class="tdValBorde">Cap. del mercado:</td><td class="tdValBorde"><strong>{$stDATOSTABLA[$stSIGLA].capitalizacion}</strong></td>
+  				</tr>
+  				<tr>
+  					<td class="tdValBorde">Oferta:</td><td class="tdValBorde"><strong>{$stDATOSTABLA[$stSIGLA].oferta}</strong></td>
+  					<td class="tdValBorde">P/G (ttm):</td><td class="tdValBorde"><strong>{$stDATOSTABLA[$stSIGLA].pg}</strong></td>
+  				</tr>
+  				<tr>
+  					<td class="tdValBorde">Precio de venta:</td><td class="tdValBorde"><strong>{$stDATOSTABLA[$stSIGLA].precio_venta}</strong></td>
+  					<td class="tdValBorde">BPA (ttm):</td><td class="tdValBorde"><strong>{$stDATOSTABLA[$stSIGLA].ganaccion}</strong></td>
+  				</tr>
+  				<tr>
+  					<td class="tdValBorde">Objetivo est 1a:</td><td class="tdValBorde"><strong>{$stDATOSTABLA[$stSIGLA].obj_est1a}</strong></td>
+  					<td class="tdValBorde">Dividendos y rendimientos:</td><td class="tdValBorde"><strong>{$stDATOSTABLA[$stSIGLA].rendim}</strong></td>
+  				</tr>
+  			</table>
+		  {else}
+				Datos no disponibles
+		  {/if}		
   	</td>
   </tr>
-  <tr><td height="10"></td></tr>
    <tr>
     <td colspan="2" align="right">
       <input name="btn_volver" type="button" value="Volver" class="tmButton" onclick="location.href='cmp.listar.php';">

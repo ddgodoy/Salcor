@@ -435,39 +435,57 @@
 			$respuesta = array();
 
 			require_once($ruta_finance.'YahooFinanceAPI.php');
-			
+
 			spl_autoload_register(array('YahooFinanceAPI', 'autoload'));
-			
+
 			$api = new YahooFinanceAPI();
 			$api->addOption("symbol");
 			$api->addOption("lastTrade");					 	 	 // ultima transaccion
+			$api->addOption("lastTradeDate");					 // fecha ultima transaccion
 			$api->addOption("averageDailyVolume"); 	 	 // volumen promedio
+			$api->addOption("volume"); 					  	 	 // volumen
 			$api->addOption("dividendYeild");			 	 	 // rendimiento
 			$api->addOption("marketCapitalization"); 	 // capitalizacion
 			$api->addOption("EPSEstimateCurrentYear"); // eps estimado
 			$api->addOption("priceEarningsRatio"); 		 // p/g
 			$api->addOption("dividendPerShare");  		 // dividendos por accion
 			$api->addOption("name");	  					 	 	 // nombre empresa
-			$api->addOption(YahooFinance_Options::FIFTY_TWO_WEEK_RANGE); // 52 week range
+			$api->addOption("previousClose");	  			 // cierre anterior
+			$api->addOption("open");	  			         // precio apertura
+			$api->addOption("change");	  			       // variacion
+			$api->addOption("bidRealTime");	           // oferta
+			$api->addOption("askRealTime");						 // precio de venta
+			$api->addOption("daysRange");						   // rango del dia
+			$api->addOption(YahooFinance_Options::FIFTY_TWO_WEEK_RANGE);  // 52 week range
+			$api->addOption(YahooFinance_Options::ONE_YEAR_TARGET_PRICE); // objetivo est 1a
 
 			foreach ($siglas as $sigla) {
 				$api->addSymbol($sigla);
 			}
 			$result = $api->getQuotes();
-		
+
 			if ($result->isSuccess()) {
 				$quotes = $result->data;
-			
+
 				foreach ($quotes as $quote) {
 					$stock_value['ultima']    = $quote->lastTrade;
-					$stock_value['volumen']   = $quote->averageDailyVolume;
+					$stock_value['ult_fecha'] = $quote->lastTradeDate;
+					$stock_value['volumen']   = $quote->volume;
 					$stock_value['nombre']    = $quote->name;
 					$stock_value['rendim']    = $quote->dividendYeild;
 					$stock_value['ganaccion'] = $quote->EPSEstimateCurrentYear;
 					$stock_value['pg']        = $quote->priceEarningsRatio;
 					$stock_value['divaccion'] = $quote->dividendPerShare;
 					$stock_value['variacion'] = $quote->get(YahooFinance_Options::FIFTY_TWO_WEEK_RANGE);
+					$stock_value['obj_est1a'] = $quote->get(YahooFinance_Options::ONE_YEAR_TARGET_PRICE);
+					$stock_value['cierre_ant']= $quote->previousClose;
+					$stock_value['apertura']  = $quote->open;
+					$stock_value['cambio']    = $quote->change;
+					$stock_value['oferta']    = $quote->bidRealTime;
+					$stock_value['rango_dia'] = $quote->daysRange;
 					$stock_value['capitalizacion'] = $quote->marketCapitalization;
+					$stock_value['precio_venta']   = $quote->askRealTime;
+					$stock_value['vol_promedio']   = $quote->averageDailyVolume;
 
 					$respuesta[$quote->symbol] = $stock_value;
 				}
