@@ -34,31 +34,7 @@
 					$_SESSION['_usuActivo'] = 0;
 				}
 			} else {$_SESSION['_usuActivo'] = $_SESSION['_usuId'];}
-			/*---------------------------------------------------------------------------*/
-			/*
-			$rValores = $oMyDB->Query("SELECT valId FROM valores WHERE valEstado = 'A' AND valUsuario = ".$_SESSION['_usuActivo'].";");
-			if ($rValores){
-				require_once getLocal('VAL').'class.valores.inc.php';
-				$oValor = new clsValores();
 
-				while ($fila = mysql_fetch_assoc($rValores)){
-					$id_valor = $fila['valId'];
-	
-					$arrDatosActualizados = $oValor->getUltimosDatos($id_valor);
-					if (count($arrDatosActualizados) > 0){
-						$campos = !empty($arrDatosActualizados['ultima'])   ? 'valUltima = '.$arrDatosActualizados['ultima'].','        : '';
-						$campos.= !empty($arrDatosActualizados['volumen'])  ? 'valVolumen = '.$arrDatosActualizados['volumen'].','      : '';
-						$campos.= !empty($arrDatosActualizados['liquidez']) ? 'valLiquidez = '.$arrDatosActualizados['liquidez'].','    : '';
-						$campos.= !empty($arrDatosActualizados['nombre'])   ? "valNombre = '".$arrDatosActualizados['nombre']."',"      : '';
-						$campos.= !empty($arrDatosActualizados['variacion'])? "valVariacion = '".$arrDatosActualizados['variacion']."',": '';
-						$campos = substr($campos, 0, -1);
-				
-						if ($campos!=''){$oMyDB->Command("UPDATE valores SET $campos WHERE valId = $id_valor;");}
-					}
-				}
-			}
-			*/
-			/*---------------------------------------------------------------------------*/
 			redireccionar(getWeb('ADMIN').'contenido.php');
 		}
 		$stERROR = $oUsuario->getErrores();

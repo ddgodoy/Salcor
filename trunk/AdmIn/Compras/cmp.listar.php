@@ -38,6 +38,7 @@
 						"valSigla, ".
 						"valLiquidez, ".
 						"valNombre, ".
+						"valIsValid, "  .
 						"monCodigo, ".
 						"secCodigo, ".
 						"paiCodigo ".
@@ -90,6 +91,7 @@
 		$aValores[$xc]['Sector']  = $oMyDB->forShow($fila['secCodigo']);
 		$aValores[$xc]['Pais']    = $oMyDB->forShow($fila['paiCodigo']);
 		$aValores[$xc]['Tabla']   = $fila['valTabla'];
+		$aValores[$xc]['esValido']= $fila['valIsValid'];
 		$aValores[$xc]['Promedio']= $aAuxRangos['PROM'];
 		$aValores[$xc]['Division']= 0;
 		$aValores[$xc]['RangoCE'] = 0;
