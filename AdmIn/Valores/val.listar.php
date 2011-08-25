@@ -42,6 +42,7 @@
 						"valVolumen, "  .
 						"valUltima, "   .
 						"valEstado, "   .
+						"valIsValid, "  .
 						"espCodigo, "   .
 						"monCodigo, "   .
 						"secCodigo, "   .
@@ -93,6 +94,7 @@
 		$aValores[$xc]['RangoCE'] = $aAuxRangos['CE'];
 		$aValores[$xc]['Volumen'] = $fila['valVolumen'];
 		$aValores[$xc]['Estado']  = $fila['valEstado']=='A'?'activa':'inactiva';
+		$aValores[$xc]['esValido']= $fila['valIsValid'];
 		$xc++;
 	}
 	//---------------------------------------------------------------------------------------------------------

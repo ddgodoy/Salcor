@@ -82,85 +82,51 @@
 						 "$this->Usuario, '$this->Tabla', '$this->Comentario', '$this->Recomendado');";
 			$resInsert = $this->DB->Command($qryInsert);
 
-			if (!$resInsert){
+			if (!$resInsert) {
 				$this->Errores['Registrar'] = 'El valor no puede ser registrado.'; return FALSE;
 			}
 			$this->Id = $this->DB->InsertId();
 			/*-------------------------------------------------------------------------*/
-			$arrDatosActualizados = $this->getUltimosDatosBySiglas(array($auxSigla), getLocal('FINANCE'));
+			$_updated = $this->getUltimosDatosBySiglas(array($auxSigla), getLocal('FINANCE'));
 
-			if (count($arrDatosActualizados) > 0) {
-				$temp_object = $this->findId($this->Id);
-				$tmpLiquidez = $this->getValorLiquidez($aInfo[$valSigla]['volumen']);
+			if (count($_updated) > 0) {
+				$resultado = $this->getStringCamposForUpdate($_updated[$auxSigla], $this->Id, true);
 
-				$ultValor  = $arrDatosActualizados[$auxSigla]['ultima'];
-				$volValor  = $arrDatosActualizados[$auxSigla]['volumen'];
-				$liqValor  = $tmpLiquidez;
-				$nomValor  = $arrDatosActualizados[$auxSigla]['nombre'];
-				$varValor  = $arrDatosActualizados[$auxSigla]['variacion'];
-				$rendim    = $arrDatosActualizados[$auxSigla]['rendim'];
-				$divaccion = $arrDatosActualizados[$auxSigla]['divaccion'];
-				$pg 			 = $arrDatosActualizados[$auxSigla]['pg'];
-				$ganaccion = $arrDatosActualizados[$auxSigla]['ganaccion'];
-				$capitalizacion = $arrDatosActualizados[$auxSigla]['capitalizacion'];
-				//
-				$stUpdValores = "UPDATE valores SET ".
-												"valRendim = '$rendim', ".
-												"valDivAccion = '$divaccion', ".
-												"valCapitalizacion = '$capitalizacion', ".
-												"valPG = '$pg', ".
-												"valGanAccion = '$ganaccion', ".
-												"valUltima = $ultValor, ".
-												"valVolumen = $volValor, ".
-												"valLiquidez = $liqValor, ".
-												"valNombre = '$nomValor', ".
-												"valVariacion = '$varValor' ".
-												"WHERE valId = $this->Id;";
-				$this->DB->Command($stUpdValores);
+				if ($resultado['campos'] != '') { $this->DB->Command("UPDATE valores SET ".$resultado['campos']." WHERE valId = $this->Id;"); }
 			}
 			/*-------------------------------------------------------------------------*/
 			return TRUE;
 		}
-		function Modificar(){
-			if (!$this->DB->Query("SELECT valId FROM valores WHERE valId = $this->Id;")){
+		function Modificar()
+		{
+			if (!$this->DB->Query("SELECT valId FROM valores WHERE valId = $this->Id;")) {
 				$this->Errores['Modificar'] = "El valor no existe.";
 			}
 			$auxSigla = strtoupper($this->Sigla);
-			if ($this->DB->Query("SELECT valId FROM valores WHERE valSigla LIKE UPPER('$auxSigla') AND valUsuario = $this->Usuario AND valId != $this->Id;")){
+
+			if ($this->DB->Query("SELECT valId FROM valores WHERE valSigla LIKE UPPER('$auxSigla') AND valUsuario = $this->Usuario AND valId != $this->Id;")) {
 				$this->Errores['Duplicado'] = "El valor ya se encuentra registrado.";
 			}
 			if (!$this->Validar()){return FALSE;}
 
 			$qryModificar = "UPDATE valores SET valSigla = '$this->Sigla', valNombre = '$this->Nombre', valEspecie = ".
-							"$this->Especie, valSector = $this->Sector, valMoneda = $this->Moneda, valPais = $this->Pais, ".
-							"valBolsa = $this->Bolsa, valRangoCB = $this->RangoCB, valRangoCMB = $this->RangoCMB, ".
-							"valRangoCE = $this->RangoCE, valUsuario = $this->Usuario, valTabla = '$this->Tabla', ".
-							"valEstado = '$this->Estado', valComentario = '$this->Comentario', valRecomendado = '$this->Recomendado' WHERE valId = $this->Id;";
+											"$this->Especie, valSector = $this->Sector, valMoneda = $this->Moneda, valPais = $this->Pais, ".
+											"valBolsa = $this->Bolsa, valRangoCB = $this->RangoCB, valRangoCMB = $this->RangoCMB, ".
+											"valRangoCE = $this->RangoCE, valUsuario = $this->Usuario, valTabla = '$this->Tabla', ".
+											"valEstado = '$this->Estado', valComentario = '$this->Comentario', valRecomendado = '$this->Recomendado' ".
+											"WHERE valId = $this->Id;";
 			$resModificar = $this->DB->Command($qryModificar);
 
 			if (!$resModificar){
 				$this->Errores['Modificar'] = "El valor no puede ser modificado."; return FALSE;
 			}
 			/*-------------------------------------------------------------------------*/
-			$arrDatosActualizados = $this->getUltimosDatosBySiglas(array($this->Sigla), getLocal('FINANCE'));
+			$_updated = $this->getUltimosDatosBySiglas(array($this->Sigla), getLocal('FINANCE'));
 
-			if (count($arrDatosActualizados) > 0) {
-				$tmpLiquidez = $this->getValorLiquidez($arrDatosActualizados[$this->Sigla]['volumen']);
+			if (count($_updated) > 0) {
+				$resultado = $this->getStringCamposForUpdate($_updated[$this->Sigla], 0, true);
 
-				$campos = !empty($arrDatosActualizados[$this->Sigla]['ultima'])   ? 'valUltima = '.$arrDatosActualizados[$this->Sigla]['ultima'].','        : '';
-				$campos.= !empty($arrDatosActualizados[$this->Sigla]['volumen'])  ? 'valVolumen = '.$arrDatosActualizados[$this->Sigla]['volumen'].','      : '';
-				$campos.= !empty($tmpLiquidez) ? 'valLiquidez = '.$tmpLiquidez.',' : '';
-				$campos.= !empty($arrDatosActualizados[$this->Sigla]['nombre'])   ? "valNombre = '".$arrDatosActualizados[$this->Sigla]['nombre']."',"      : '';
-				$campos.= !empty($arrDatosActualizados[$this->Sigla]['variacion'])? "valVariacion = '".$arrDatosActualizados[$this->Sigla]['variacion']."',": '';
-				$campos.= !empty($arrDatosActualizados[$this->Sigla]['rendim'])? "valRendim = '".$arrDatosActualizados[$this->Sigla]['rendim']."',": '';
-				$campos.= !empty($arrDatosActualizados[$this->Sigla]['divaccion'])? "valDivAccion = '".$arrDatosActualizados[$this->Sigla]['divaccion']."',": '';
-				$campos.= !empty($arrDatosActualizados[$this->Sigla]['capitalizacion'])? "valCapitalizacion = '".$arrDatosActualizados[$this->Sigla]['capitalizacion']."',": '';
-				$campos.= !empty($arrDatosActualizados[$this->Sigla]['pg'])? "valPG = '".$arrDatosActualizados[$this->Sigla]['pg']."',": '';
-				$campos.= !empty($arrDatosActualizados[$this->Sigla]['ganaccion'])? "valGanAccion = '".$arrDatosActualizados[$this->Sigla]['ganaccion']."',": '';
-				
-				$campos = substr($campos, 0, -1);
-				//
-				if ($campos!=''){$this->DB->Command("UPDATE valores SET $campos WHERE valId = $this->Id;");}
+				if ($resultado['campos'] != '') { $this->DB->Command("UPDATE valores SET ".$resultado['campos']." WHERE valId = $this->Id;"); }
 			}
 			/*-------------------------------------------------------------------------*/
 			return TRUE;
@@ -385,51 +351,6 @@
 		}
 		function getId(){return $this->Id;}
 //----------------------------------------------------------
-		function getUltimosDatos($id_valor)
-		{
-			$resultado = array();
-
-			if ($this->findId($id_valor)){
-				if (@$handlePAGINA = fopen("http://ar.finance.yahoo.com/q?s=$this->Sigla&d=c&k=c4",'r')){
-					$stTEXTO = '';
-					while (!feof($handlePAGINA)){$stTEXTO .= fgets($handlePAGINA, 10240);}
-					fclose($handlePAGINA);
-	
-					$cadenaINI = "Última cotización";
-					$cadenaFIN = "<\/td><\/tr><\/table><\/td><\/tr><\/table><\/td><\/tr>";
-
-					preg_match("/$cadenaINI(.*)$cadenaFIN/s", $stTEXTO, $xRESULT);
-
-					if (!empty($xRESULT[1])){
-					/*ultima transaccion--------------------------------------------------------------*/
-						$resultado['ultima'] = $this->getInfoCelda($xRESULT[1], ':</td><td class="yfnc_tabledata1"><big><b>', '</', true);
-					/*volumen promedio----------------------------------------------------------------*/
-						$resultado['volumen'] = $this->getInfoCelda($xRESULT[1], 'Vol promedio <small>(3m)</small>:</td><td class="yfnc_tabledata1">', '</', true);
-					/*variacion anual-----------------------------------------------------------------*/
-						$resultado['variacion'] = $this->getInfoCelda($xRESULT[1], 'Rango 52s:</td><td class="yfnc_tabledata1">', '</');
-					/*temporal para rendimiento y dividendos------------------------------------------*/
-						$ubi_ini = strpos($xRESULT[1], 'Dividendos y Rendimientos:</td><td class="yfnc_tabledata1">');
-						$ubi_ini = $ubi_ini + strlen('Dividendos y Rendimientos:</td><td class="yfnc_tabledata1">');
-						$temp = substr($xRESULT[1], $ubi_ini);
-						$temp = explode('(', $temp);	
-					/*rendim--------------------------------------------------------------------------*/
-						$resultado['rendim'] = substr($temp[1], 0, -1);
-					/*div/accion----------------------------------------------------------------------*/
-						$resultado['divaccion'] = $temp[0];
-					/*capitalizacion------------------------------------------------------------------*/
-						$resultado['capitalizacion'] = $this->getInfoCelda($xRESULT[1], 'Cap. del mercado:</td><td class="yfnc_tabledata1">', '</');
-					/*p/g-----------------------------------------------------------------------------*/
-						$resultado['pg'] = $this->getInfoCelda($xRESULT[1], 'P/G <small>(ttm)</small>:</td><td class="yfnc_tabledata1">', '</');
-					/*gan/accion----------------------------------------------------------------------*/
-						$resultado['ganaccion'] = $this->getInfoCelda($xRESULT[1], 'BPA <small>(ttm)</small>:</td><td class="yfnc_tabledata1">', '</');
-					/*calculo de la liquidez----------------------------------------------------------*/
-						$resultado['liquidez'] = $this->getValorLiquidez($resultado['volumen']);
-					/*obtencion del nombre------------------------------------------------------------*/
-						$resultado['nombre'] = $this->getNombreEmpresa();
-			}}}
-			return $resultado;
-		}
-//----------------------------------------------------------
 		function getUltimosDatosBySiglas($siglas, $ruta_finance)
 		{
 			$respuesta = array();
@@ -468,6 +389,7 @@
 				$quotes = $result->data;
 
 				foreach ($quotes as $quote) {
+					$stock_value['simbolo']   = $quote->symbol;
 					$stock_value['ultima']    = $quote->lastTrade;
 					$stock_value['ult_fecha'] = $quote->lastTradeDate;
 					$stock_value['volumen']   = $quote->volume;
@@ -493,9 +415,11 @@
 			return $respuesta;
 		}
 //----------------------------------------------------------
-		function getValorEnTabla($haystack, $ini, $fin, $fix_simbolo){
+		function getValorEnTabla($haystack, $ini, $fin, $fix_simbolo)
+		{
 			$resultado = 0;
 			$inicioValor = strpos($haystack, $ini);
+
 			if ($inicioValor !== false){
 				$inicioValor += strlen($ini);
 
@@ -523,27 +447,6 @@
 			return $liquidez;
 		}
 //----------------------------------------------------------
-		function getNombreEmpresa(){
-			$resultado = '';
-			if (@$handlePAGINA = fopen("http://ar.finance.yahoo.com/q?s=$this->Sigla&d=2b",'r')){
-				$stTEXTO = '';
-				while (!feof($handlePAGINA)){$stTEXTO .= fgets($handlePAGINA, 10240);}
-				fclose($handlePAGINA);
-
-				$cadenaINI = "Detallado<\/b>";
-				$cadenaFIN = "<\/b> \(";
-
-				preg_match("/$cadenaINI(.*)$cadenaFIN/s", $stTEXTO, $xRESULT);
-
-				if (!empty($xRESULT[1])){
-					$inicioValor = strpos($xRESULT[1], '<b>');
-					if ($inicioValor !== false){
-						$inicioValor += strlen('<b>');
-						$resultado = strip_tags(substr($xRESULT[1], $inicioValor, strlen($xRESULT[1])));
-			}}}
-			return $resultado;
-		}
-//----------------------------------------------------------
 		function getInfoCelda($haystack, $ini, $fin, $fix_simbolo=false){
 			$resultado = '';
 			$inicioValor = strpos($haystack, $ini);
@@ -560,6 +463,64 @@
         $resultado = str_replace(",", ".",$resultado);
       }
 			return $resultado;
+		}
+//----------------------------------------------------------
+		function mayContinue($valor, $check_comilla = false)
+		{
+			if (!empty($valor)) {
+				if (strpos($valor, 'N/A') === false) {
+					if ($check_comilla) {
+						if (strpos($valor, '"') === false) { return true; }
+					} else {
+						return true;
+			}}}
+			return false;
+		}
+//----------------------------------------------------------
+		function getStringCamposForUpdate($info, $val_id = 0, $cut = false)
+		{
+			$lastTr = 0; $campos = ''; $getLiq = false;
+
+			if ($this->mayContinue($info['nombre'])) {
+				$campos .= " valNombre = '".$info['nombre']."', ";
+			}
+			if ($this->mayContinue($info['volumen'])) {
+				$campos .= " valVolumen = '".$info['volumen']."', "; $getLiq = true;
+			}
+			if ($this->mayContinue($info['variacion'], true)) {
+				$campos .= " valVariacion = '".$info['variacion']."', ";
+			}
+			if ($this->mayContinue($info['rendim'])) {
+				$campos .= " valRendim = '".$info['rendim']."', ";
+			}
+			if ($this->mayContinue($info['divaccion'])) {
+				$campos .= " valDivAccion = '".$info['divaccion']."', ";
+			}
+			if ($this->mayContinue($info['pg'])) {
+				$campos .= " valPG = '".$info['pg']."', ";
+			}
+			if ($this->mayContinue($info['ganaccion'])) {
+				$campos .= " valGanAccion = '".$info['ganaccion']."', ";
+			}
+			if ($this->mayContinue($info['capitalizacion'])) {
+				$campos .= " valCapitalizacion = '".$info['capitalizacion']."', ";
+			}
+			if ($this->mayContinue($info['ultima'])) {
+				$campos .= " valUltima = '".$info['ultima']."', "; $lastTr = (float) $info['ultima'];
+			}
+			$existe = !empty($lastTr) ? true : false;
+
+			if ($getLiq) {
+				if (!empty($val_id)) { $this->findId($val_id); }
+
+				$liquidez = $this->getValorLiquidez($info['volumen']);
+
+				if (!empty($liquidez)) { $campos .= " valLiquidez = '".$liquidez."', "; }
+			}
+			if ($cut) {
+				$campos = substr($campos, 0, -2);
+			}
+			return array('campos'=>$campos, 'existe'=>$existe);
 		}
 //----------------------------------------------------------
 	}

@@ -153,7 +153,7 @@ function setTextLetra(letra){
 <div class="div_contenido_cuerpo">
 <table cellpadding="2" cellspacing="0" class="tmFormTABLE" style="border-top:0px;">
 {foreach from=$stVALORES key=id item=valor}
-	<tr onmouseover="this.bgColor='#EFEFE7';" onMouseOut="this.bgColor='#FFFFFF';">
+	<tr onmouseover="this.bgColor='#EFEFE7';" onMouseOut="this.bgColor='#FFFFFF';" {if !$valor.esValido}style="background-color:#FFFFA6;"{/if}>
 		<td class='tmDataTD' width="19">
 			<a href='{$stRUTAS.cmp}cmp.mas_info.php?Id={$valor.Id}'>
 				<img src='{$stRUTAS.images}informacion.gif' title='M&aacute;s informaci&oacute;n' border='0'/>
@@ -161,10 +161,16 @@ function setTextLetra(letra){
 		</td>
 		<td class='tmDataTD' width="81" style="font-size:11px;cursor:pointer;" id="sigla_{$valor.Id}" onclick="verDetalle({$valor.Id});">{$valor.Sigla}</td>
 		<td class='tmDataTD' width="14" align="center">{$valor.Moneda}</td>
-		<td class='tmDataTD' width="43" align="right" id="precio_{$valor.Id}" bgcolor="#DDE9F7">{$valor.Precio|default:'--'}</td>
+		<td class='tmDataTD' width="43" align="right" id="precio_{$valor.Id}" bgcolor="#DDE9F7">
+			{if $valor.Precio > 0}{$valor.Precio|default:'--'}{else}N/A{/if}
+		</td>
 		<td class='tmDataTD' width="43" align="right">{$valor.Liquidez|default:'--'}</td>
-		<td class='tmDataTD' width="59" align="right">{$valor.Promedio|default:'--'|string_format:"%.2f"}</td>
-		<td class='tmDataTD' width="44" align="right">{$valor.Division|string_format:"%.2f"}</td>
+		<td class='tmDataTD' width="59" align="right">
+			{if $valor.Promedio > 0}{$valor.Promedio|default:'--'|string_format:"%.2f"}{else}N/A{/if}
+		</td>
+		<td class='tmDataTD' width="44" align="right">
+			{if $valor.Division > 0}{$valor.Division|string_format:"%.2f"}{else}N/A{/if}
+		</td>
 		{if $valor.RangoCB}
 			<td class='tmDataTD' style="background-color:#EFEDED;" align="right" width="39">
 			{$valor.RangoCB|string_format:"%.2f"}
@@ -181,7 +187,13 @@ function setTextLetra(letra){
 		{else}<td class='tmDataTD' width="37">&nbsp;{/if}
 		</td>
 		<td class='tmDataTD' width="14" align="center">{$valor.Tabla}</td>
-		<td class='tmDataTD' width="169" style="font-size:11px;">{$valor.Empresa|default:'--'}</td>
+		<td class='tmDataTD' width="169" style="font-size:11px;">
+			{if !$valor.esValido}
+				<span style="color:#EA552A;"><em>NO EXISTE EN ORIGEN</em></span>
+			{else}
+				{if $valor.Sigla == $valor.Empresa}<span style="color:#EA552A;"><em>SIN DATOS EN ORIGEN</em></span>{else}{$valor.Empresa|default:'--'}{/if}
+			{/if}
+		</td>
 		<td class='tmDataTD' width="37" style="font-size:11px;">{$valor.Sector}</td>
 		<td class='tmDataTD' width="25">{$valor.Pais}</td>
 		<td class='tmDataTD' width="24" align="center">

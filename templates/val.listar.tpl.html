@@ -284,7 +284,7 @@
 <div class="div_contenido_cuerpo">
 <table cellpadding="2" cellspacing="0" class="tmFormTABLE" style="border-top:0px;" id="tb_cambio_tabla">
 {	foreach from=$stVALORES item=valor}
-	<tr onmouseover="this.bgColor='#EFEFE7';" onMouseOut="this.bgColor='#FFFFFF';">
+	<tr onmouseover="this.bgColor='#EFEFE7';" onMouseOut="this.bgColor='#FFFFFF';" {if !$valor.esValido}style="background-color:#FFFFA6;"{/if}>
 		<td class='tmDataTD' width="19">
 			<a href='{$stRUTAS.val}val.mas_info.php?Id={$valor.Id}'>
 				<img src='{$stRUTAS.images}informacion.gif' title='M&aacute;s informaci&oacute;n' border='0'/>
@@ -296,7 +296,17 @@
 		<td class='tmDataTD' width="30">{$valor.Especie}</td>
 		<td class='tmDataTD' width="15" align="center">{$valor.Moneda}</td>
 		<td class='tmDataTD' width="40" align="right">{$valor.Liquidez|default:'--'}</td>
-		<td class='tmDataTD' width="150" style="font-size:11px;">{$valor.Empresa|default:'--'}</td>
+		<td class='tmDataTD' width="150" style="font-size:11px;">
+			{if !$valor.esValido}
+				<span style="color:#EA552A;"><em>NO EXISTE EN ORIGEN</em></span>
+			{else}
+				{if $valor.Sigla == $valor.Empresa}
+					<span style="color:#EA552A;"><em>SIN DATOS EN ORIGEN</em></span>
+				{else}
+					{$valor.Empresa|default:'--'}
+				{/if}
+			{/if}
+		</td>
 		<td class='tmDataTD' width="36" style="font-size:11px;">{$valor.Sector}</td>
 		<td class='tmDataTD' width="30">{$valor.Pais}</td>
 		<td class='tmDataTD' width="21" align="center">
